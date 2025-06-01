@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ADBOSS Future Calculator 😎</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #e0ffe0, #c0f0ff);
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #111;
+      font-weight: bold;
+    }
+    input, button {
+      padding: 12px;
+      margin: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      width: 90%;
+      max-width: 400px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #result, #pastResult {
+      margin-top: 30px;
+      white-space: pre-wrap;
+      background-color: #f0fff0;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #a0d0a0;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      display: none;
+    }
+    footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #777;
+    }
+    .settings-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #888;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    #settingsBox {
+      display: none;
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      text-align: left;
+      max-width: 300px;
+    }
+    #superPower {
+      display: none;
+      margin-top: 20px;
+      background: #fff0e0;
+      padding: 20px;
+      border: 2px dashed #f90;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    #homeScreen, #mainScreen, #pastLifeScreen {
+      display: none;
+    }
+    #homeScreen {
+      display: block;
+    }
+    #homeScreen h1 {
+      font-size: 48px;
+      margin-top: 100px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🎧 AUDIO ELEMENTS -->
+  <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+  <audio id="clickSound" src="https://assets.mixkit.co/sfx/preview/mixkit-positive-interface-beep-221.mp3"></audio>
+
+  <!-- 🏠 HOME SCREEN -->
+  <div id="homeScreen">
+    <h1>ADBOSS</h1>
+    <button onclick="startApp()">Start</button>
+    <button onclick="openPastLife()">Know Your Pichle Janm Ka Naam</button>
+  </div>
+
+  <!-- 🔮 PAST LIFE SCREEN -->
+  <div id="pastLifeScreen">
+    <h1>Know Your Pichle Janm Ka Naam 🔮</h1>
+    <input type="text" id="pastName" placeholder="Enter Your Name" />
+    <input type="number" id="birthYear" placeholder="Enter Your Birth Year" />
+    <input type="text" id="favColor" placeholder="Enter Your Favourite Color" />
+    <button onclick="revealPastName()">Reveal My Past Life Name</button>
+    <div id="pastResult"></div>
+    <button onclick="goBackHome()">⬅️ Go Back</button>
+  </div>
+
+  <!-- 🔢 MAIN SCREEN -->
+  <div id="mainScreen">
+    <h1>ADBOSS</h1>
+    <button class="settings-btn" onclick="toggleSettings()">⚙️</button>
+    <div id="settingsBox">
+      <p><strong>Try ADBOSS ADVANCE</strong></p>
+      <p>Enter Code:</p>
+      <input type="text" id="codeInput" placeholder="Enter code here"/>
+      <button onclick="checkCode()">Activate</button>
+      <p style="font-size: 12px; color: #555;">To get the code, visit:<br><a href="https://youtube.com/@ravi..bhai_0029" target="_blank">youtube.com/@ravi..bhai_0029</a></p>
+    </div>
+
+    <input type="text" id="name" placeholder="Enter Your Name" />
+    <input type="number" id="age" placeholder="Enter Your Age" />
+    <input type="number" id="favNo" placeholder="Enter Your Favourite Number" />
+    <input type="text" id="favGod" placeholder="Enter Your Favourite God" />
+    <button onclick="calculateFuture()">Calculate My Future 🤯</button>
+
+    <div id="result"></div>
+    <div id="superPower">🎉 You Unlocked: CHECK YOUR SUPER POWER! 🚀<br>You're meant to inspire the world and conquer every challenge ahead! 🔥</div>
+
+    <footer>MADE BY ARVIND DARA</footer>
+  </div>
+
+  <script>
+    const jobs = ["Doctor", "Engineer", "Teacher", "Scientist", "Politician", "Artist", "CEO", "Soldier"];
+    const gods = ["Shiva", "Vishnu", "Hanuman", "Lakshmi", "Durga", "Ram", "Krishna", "Ganesh"];
+    const rich = ["Elon Musk", "Ambani", "Bill Gates", "Warren Buffet", "Gautam Adani", "Mark Zuckerberg", "You!"];
+
+    function repeatArray(arr, count) {
+      return Array(count).fill(arr).flat();
+    }
+
+    const jobsList = repeatArray(jobs, 13);
+    const godsList = repeatArray(gods, 13);
+    const richList = repeatArray(rich, 13);
+
+    function playMusic() {
+      const music = document.getElementById("bgMusic");
+      music.volume = 0.3;
+      music.play();
+    }
+
+    function playClick() {
+      const sound = document.getElementById("clickSound");
+      sound.play();
+    }
+
+    function startApp() {
+      playClick();
+      playMusic();
+      document.getElementById("homeScreen").style.display = "none";
+      document.getElementById("mainScreen").style.display = "block";
+    }
+
+    function openPastLife() {
+      playClick();
+      document.getElementById("homeScreen").style.display = "none";
+      document.getElementById("pastLifeScreen").style.display = "block";
+    }
+
+    function goBackHome() {
+      playClick();
+      document.getElementById("pastLifeScreen").style.display = "none";
+      document.getElementById("homeScreen").style.display = "block";
+    }
+
+    function revealPastName() {
+      playClick();
+      const pastNames = ["Chandraprakash", "Rajkumari Nandini", "Vikramaditya", "Maya Devi", "Rudra", "Kalki", "Bhupendra", "Aghori Baba", "Mirabai", "Arjun Singh"];
+      const randomName = pastNames[Math.floor(Math.random() * pastNames.length)];
+      const resultDiv = document.getElementById("pastResult");
+      resultDiv.textContent = `😮 Your Pichle Janm Ka Naam Tha: ${randomName}`;
+      resultDiv.style.display = "block";
+    }
+
+    function toggleSettings() {
+      const box = document.getElementById("settingsBox");
+      box.style.display = box.style.display === "block" ? "none" : "block";
+    }
+
+    function checkCode() {
+      playClick();
+      const code = document.getElementById("codeInput").value.trim();
+      if (code === "2929") {
+        document.getElementById("superPower").style.display = "block";
+      } else {
+        alert("Wrong code! Check the video description.");
+      }
+    }
+
+    function calculateFuture() {
+      playClick();
+      const name = document.getElementById("name").value.trim().toUpperCase();
+      const age = parseInt(document.getElementById("age").value);
+      const favNo = parseInt(document.getElementById("favNo").value);
+      const favGod = document.getElementById("favGod").value.trim();
+      const resultDiv = document.getElementById("result");
+
+      if (!/^[A-Z]+$/.test(name)) {
+        alert("Please enter a valid name (alphabets only).");
+        return;
+      }
+      if (isNaN(age) || isNaN(favNo)) {
+        alert("Age and Favourite Number must be valid numbers.");
+        return;
+      }
+
+      const nameLen = name.length;
+      const favGodLen = favGod.length;
+      const job = jobsList[(nameLen * age * favNo) % 100];
+      const luck = (nameLen * age.toString().length * favNo) % 100;
+      const iq = (nameLen * age.toString().length * favNo % 100) + favGodLen;
+      const god = godsList[(nameLen * age.toString().length * favNo * favGodLen) % 100].toUpperCase();
+      const blessing = (nameLen + age.toString().length * favNo.toString().length * favGodLen) % 100;
+      const livingAge = (nameLen * age * favNo) % 100;
+      const totalAge = livingAge + age;
+      const richness = richList[(name + age + favNo).length % richList.length];
+
+      const resultText = `
+Name: ${name}
+Job: ${job}
+Luck: ${luck}%
+IQ Level: ${iq}
+God: ${god}
+God's Blessing: ${blessing}%
+Expected Living Age: ${livingAge}
+Total Age: ${totalAge}
+Future Richness: Like ${richness}`;
+
+      resultDiv.textContent = resultText;
+      resultDiv.style.display = "block";
+    }
+  </script>
+</body>
+</html>
