@@ -163,26 +163,38 @@
     <footer>MADE BY ARVIND DARA</footer>
   </div>
 
-  <!-- 🎮 GAME SCREEN -->
+  <!-- 🎮 GAME SCREEN (Marriage Fingerprint Game) -->
   <div id="gameScreen">
-    <h1>ADVOSS GAME</h1>
-    <p style="font-size: 18px;">Game coming soon...</p>
+    <h1>💍 Marriage Predictor Game</h1>
+    <p style="font-size: 18px;">Press & hold the fingerprint below to reveal your marriage year!</p>
+    <div 
+      style="font-size: 80px; margin: 30px auto; cursor: pointer;" 
+      ontouchstart="startHold()" 
+      ontouchend="endHold()" 
+      onmousedown="startHold()" 
+      onmouseup="endHold()" 
+      onmouseleave="cancelHold()"
+    >
+      🆔
+    </div>
+    <div id="marriageResult" style="font-size: 20px; font-weight: bold; color: #444; margin-top: 20px;"></div>
     <button onclick="goBackHome()">⬅️ Go Back</button>
   </div>
 
   <script>
-    // Data Arrays
+    // Arrays for results
     const jobs = ["Doctor", "Engineer", "Teacher", "Scientist", "Politician", "Artist", "CEO", "Soldier"];
     const gods = ["Shiva", "Vishnu", "Hanuman", "Lakshmi", "Durga", "Ram", "Krishna", "Ganesh"];
     const rich = ["Elon Musk", "Ambani", "Bill Gates", "Warren Buffet", "Gautam Adani", "Mark Zuckerberg", "You!"];
+
     function repeatArray(arr, count) {
       return Array(count).fill(arr).flat();
     }
+
     const jobsList = repeatArray(jobs, 13);
     const godsList = repeatArray(gods, 13);
     const richList = repeatArray(rich, 13);
 
-    // Startup
     window.onload = function() {
       document.getElementById("introSound").play();
       setTimeout(() => {
@@ -280,6 +292,37 @@
       const resultText = `Name: ${name}\nJob: ${job}\nLuck: ${luck}%\nIQ Level: ${iq}\nGod: ${god}\nGod's Blessing: ${blessing}%\nExpected Living Age: ${livingAge}\nTotal Age: ${totalAge}\nFuture Richness: Like ${richness}`;
       resultDiv.textContent = resultText;
       resultDiv.style.display = "block";
+    }
+
+    // 🎮 Marriage Predictor Logic
+    let holdTimer, holdStartTime;
+    const marriageDates = [
+      "🗓 2026 – Start shopping for your wedding outfit! 🛍",
+      "🗓 2030 – Great things take time 😉",
+      "🗓 2028 – Just a few years away 😄",
+      "🗓 2055 – True love waits... a lot 😂",
+      "🗓 Never – You are married to your career! 💼",
+      "🗓 2027 – Start practicing your dance moves 💃",
+      "🗓 2042 – After your 5th job change 😆",
+      "🗓 Next Year – Are you even ready? 😳"
+    ];
+
+    function startHold() {
+      navigator.vibrate?.(100);
+      holdStartTime = Date.now();
+      holdTimer = setTimeout(() => {
+        const result = marriageDates[Math.floor(Math.random() * marriageDates.length)];
+        document.getElementById("marriageResult").textContent = `🔮 Prediction: ${result}`;
+        navigator.vibrate?.([200, 100, 200]);
+      }, 5000);
+    }
+
+    function endHold() {
+      clearTimeout(holdTimer);
+    }
+
+    function cancelHold() {
+      clearTimeout(holdTimer);
     }
   </script>
 </body>
