@@ -92,30 +92,43 @@
       font-weight: bold;
       font-size: 16px;
     }
-    #homeScreen, #mainScreen, #pastLifeScreen {
+    #introScreen, #homeScreen, #mainScreen, #pastLifeScreen, #gameScreen {
       display: none;
     }
-    #homeScreen {
+    #introScreen {
       display: block;
-    }
-    #homeScreen h1 {
       font-size: 48px;
-      margin-top: 100px;
       color: #333;
+      margin-top: 150px;
+      animation: fadeOut 1s ease 4s forwards;
+    }
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- 🎧 AUDIO ELEMENTS -->
+  <!-- 🎵 AUDIO -->
   <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
   <audio id="clickSound" src="https://assets.mixkit.co/sfx/preview/mixkit-positive-interface-beep-221.mp3"></audio>
+  <audio id="introSound" src="https://assets.mixkit.co/sfx/preview/mixkit-epic-orchestra-transition-229.mp3"></audio>
+
+  <!-- 🔥 INTRO SCREEN -->
+  <div id="introScreen">
+    <h1>✨ Welcome to ADBOSS ✨</h1>
+    <p>Loading your future...</p>
+  </div>
 
   <!-- 🏠 HOME SCREEN -->
   <div id="homeScreen">
     <h1>ADBOSS</h1>
     <button onclick="startApp()">Start</button>
     <button onclick="openPastLife()">Know Your Pichle Janm Ka Naam</button>
+    <button onclick="openGame()">Play Game 🎮</button>
   </div>
 
   <!-- 🔮 PAST LIFE SCREEN -->
@@ -129,7 +142,7 @@
     <button onclick="goBackHome()">⬅️ Go Back</button>
   </div>
 
-  <!-- 🔢 MAIN SCREEN -->
+  <!-- 🧠 MAIN SCREEN -->
   <div id="mainScreen">
     <h1>ADBOSS</h1>
     <button class="settings-btn" onclick="toggleSettings()">⚙️</button>
@@ -140,31 +153,43 @@
       <button onclick="checkCode()">Activate</button>
       <p style="font-size: 12px; color: #555;">To get the code, visit:<br><a href="https://youtube.com/@ravi..bhai_0029" target="_blank">youtube.com/@ravi..bhai_0029</a></p>
     </div>
-
     <input type="text" id="name" placeholder="Enter Your Name" />
     <input type="number" id="age" placeholder="Enter Your Age" />
     <input type="number" id="favNo" placeholder="Enter Your Favourite Number" />
     <input type="text" id="favGod" placeholder="Enter Your Favourite God" />
     <button onclick="calculateFuture()">Calculate My Future 🤯</button>
-
     <div id="result"></div>
     <div id="superPower">🎉 You Unlocked: CHECK YOUR SUPER POWER! 🚀<br>You're meant to inspire the world and conquer every challenge ahead! 🔥</div>
-
     <footer>MADE BY ARVIND DARA</footer>
   </div>
 
+  <!-- 🎮 GAME SCREEN -->
+  <div id="gameScreen">
+    <h1>ADVOSS GAME</h1>
+    <p style="font-size: 18px;">Game coming soon...</p>
+    <button onclick="goBackHome()">⬅️ Go Back</button>
+  </div>
+
   <script>
+    // Data Arrays
     const jobs = ["Doctor", "Engineer", "Teacher", "Scientist", "Politician", "Artist", "CEO", "Soldier"];
     const gods = ["Shiva", "Vishnu", "Hanuman", "Lakshmi", "Durga", "Ram", "Krishna", "Ganesh"];
     const rich = ["Elon Musk", "Ambani", "Bill Gates", "Warren Buffet", "Gautam Adani", "Mark Zuckerberg", "You!"];
-
     function repeatArray(arr, count) {
       return Array(count).fill(arr).flat();
     }
-
     const jobsList = repeatArray(jobs, 13);
     const godsList = repeatArray(gods, 13);
     const richList = repeatArray(rich, 13);
+
+    // Startup
+    window.onload = function() {
+      document.getElementById("introSound").play();
+      setTimeout(() => {
+        document.getElementById("introScreen").style.display = "none";
+        document.getElementById("homeScreen").style.display = "block";
+      }, 5000);
+    };
 
     function playMusic() {
       const music = document.getElementById("bgMusic");
@@ -173,8 +198,7 @@
     }
 
     function playClick() {
-      const sound = document.getElementById("clickSound");
-      sound.play();
+      document.getElementById("clickSound").play();
     }
 
     function startApp() {
@@ -190,9 +214,17 @@
       document.getElementById("pastLifeScreen").style.display = "block";
     }
 
+    function openGame() {
+      playClick();
+      document.getElementById("homeScreen").style.display = "none";
+      document.getElementById("gameScreen").style.display = "block";
+    }
+
     function goBackHome() {
       playClick();
+      document.getElementById("mainScreen").style.display = "none";
       document.getElementById("pastLifeScreen").style.display = "none";
+      document.getElementById("gameScreen").style.display = "none";
       document.getElementById("homeScreen").style.display = "block";
     }
 
@@ -227,7 +259,6 @@
       const favNo = parseInt(document.getElementById("favNo").value);
       const favGod = document.getElementById("favGod").value.trim();
       const resultDiv = document.getElementById("result");
-
       if (!/^[A-Z]+$/.test(name)) {
         alert("Please enter a valid name (alphabets only).");
         return;
@@ -236,7 +267,6 @@
         alert("Age and Favourite Number must be valid numbers.");
         return;
       }
-
       const nameLen = name.length;
       const favGodLen = favGod.length;
       const job = jobsList[(nameLen * age * favNo) % 100];
@@ -247,18 +277,7 @@
       const livingAge = (nameLen * age * favNo) % 100;
       const totalAge = livingAge + age;
       const richness = richList[(name + age + favNo).length % richList.length];
-
-      const resultText = `
-Name: ${name}
-Job: ${job}
-Luck: ${luck}%
-IQ Level: ${iq}
-God: ${god}
-God's Blessing: ${blessing}%
-Expected Living Age: ${livingAge}
-Total Age: ${totalAge}
-Future Richness: Like ${richness}`;
-
+      const resultText = `Name: ${name}\nJob: ${job}\nLuck: ${luck}%\nIQ Level: ${iq}\nGod: ${god}\nGod's Blessing: ${blessing}%\nExpected Living Age: ${livingAge}\nTotal Age: ${totalAge}\nFuture Richness: Like ${richness}`;
       resultDiv.textContent = resultText;
       resultDiv.style.display = "block";
     }
