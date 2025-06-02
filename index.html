@@ -38,7 +38,7 @@
     button:hover {
       background-color: #45a049;
     }
-    #result, #pastResult {
+    #result, #pastResult, #faceResult {
       margin-top: 30px;
       white-space: pre-wrap;
       background-color: #f0fff0;
@@ -92,7 +92,7 @@
       font-weight: bold;
       font-size: 16px;
     }
-    #introScreen, #homeScreen, #mainScreen, #pastLifeScreen, #gameScreen {
+    #introScreen, #homeScreen, #mainScreen, #pastLifeScreen, #gameScreen, #guessFaceScreen {
       display: none;
     }
     #introScreen {
@@ -115,7 +115,9 @@
   <!-- 🎵 AUDIO -->
   <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
   <audio id="clickSound" src="https://assets.mixkit.co/sfx/preview/mixkit-positive-interface-beep-221.mp3"></audio>
-  <audio id="introSound" src="https://assets.mixkit.co/sfx/preview/mixkit-epic-orchestra-transition-229.mp3"></audio>
+
+  <!-- ✅ CUSTOM INTRO AUDIO -->
+  <audio id="introSound" src="/mnt/data/ElevenLabs_2025-06-02T07_45_03_Taksh - Powerful & Commanding Voice_pvc_sp90_s55_sb26_se0_q50_b_m2.mp3"></audio>
 
   <!-- 🔥 INTRO SCREEN -->
   <div id="introScreen">
@@ -129,6 +131,7 @@
     <button onclick="startApp()">Start</button>
     <button onclick="openPastLife()">Know Your Pichle Janm Ka Naam</button>
     <button onclick="openGame()">Play Game 🎮</button>
+    <button onclick="openGuessFace()">Guess Your Face 🤪</button>
   </div>
 
   <!-- 🔮 PAST LIFE SCREEN -->
@@ -139,6 +142,16 @@
     <input type="text" id="favColor" placeholder="Enter Your Favourite Color" />
     <button onclick="revealPastName()">Reveal My Past Life Name</button>
     <div id="pastResult"></div>
+    <button onclick="goBackHome()">⬅️ Go Back</button>
+  </div>
+
+  <!-- 🤪 GUESS FACE SCREEN -->
+  <div id="guessFaceScreen">
+    <h1>Guess Your Face 🤪</h1>
+    <input type="text" id="faceName" placeholder="Enter Your Name" />
+    <input type="number" id="faceAge" placeholder="Enter Your Age" />
+    <button onclick="revealFunnyFace()">Guess My Face</button>
+    <div id="faceResult"></div>
     <button onclick="goBackHome()">⬅️ Go Back</button>
   </div>
 
@@ -163,7 +176,7 @@
     <footer>MADE BY ARVIND DARA</footer>
   </div>
 
-  <!-- 🎮 GAME SCREEN (Marriage Fingerprint Game) -->
+  <!-- 🎮 GAME SCREEN -->
   <div id="gameScreen">
     <h1>💍 Marriage Predictor Game</h1>
     <p style="font-size: 18px;">Press & hold the fingerprint below to reveal your marriage year!</p>
@@ -182,19 +195,15 @@
   </div>
 
   <script>
-    // Arrays for results
     const jobs = ["Doctor", "Engineer", "Teacher", "Scientist", "Politician", "Artist", "CEO", "Soldier"];
     const gods = ["Shiva", "Vishnu", "Hanuman", "Lakshmi", "Durga", "Ram", "Krishna", "Ganesh"];
     const rich = ["Elon Musk", "Ambani", "Bill Gates", "Warren Buffet", "Gautam Adani", "Mark Zuckerberg", "You!"];
-
     function repeatArray(arr, count) {
       return Array(count).fill(arr).flat();
     }
-
     const jobsList = repeatArray(jobs, 13);
     const godsList = repeatArray(gods, 13);
     const richList = repeatArray(rich, 13);
-
     window.onload = function() {
       document.getElementById("introSound").play();
       setTimeout(() => {
@@ -202,44 +211,43 @@
         document.getElementById("homeScreen").style.display = "block";
       }, 5000);
     };
-
     function playMusic() {
       const music = document.getElementById("bgMusic");
       music.volume = 0.3;
       music.play();
     }
-
     function playClick() {
       document.getElementById("clickSound").play();
     }
-
     function startApp() {
       playClick();
       playMusic();
       document.getElementById("homeScreen").style.display = "none";
       document.getElementById("mainScreen").style.display = "block";
     }
-
     function openPastLife() {
       playClick();
       document.getElementById("homeScreen").style.display = "none";
       document.getElementById("pastLifeScreen").style.display = "block";
     }
-
     function openGame() {
       playClick();
       document.getElementById("homeScreen").style.display = "none";
       document.getElementById("gameScreen").style.display = "block";
     }
-
+    function openGuessFace() {
+      playClick();
+      document.getElementById("homeScreen").style.display = "none";
+      document.getElementById("guessFaceScreen").style.display = "block";
+    }
     function goBackHome() {
       playClick();
       document.getElementById("mainScreen").style.display = "none";
       document.getElementById("pastLifeScreen").style.display = "none";
       document.getElementById("gameScreen").style.display = "none";
+      document.getElementById("guessFaceScreen").style.display = "none";
       document.getElementById("homeScreen").style.display = "block";
     }
-
     function revealPastName() {
       playClick();
       const pastNames = ["Chandraprakash", "Rajkumari Nandini", "Vikramaditya", "Maya Devi", "Rudra", "Kalki", "Bhupendra", "Aghori Baba", "Mirabai", "Arjun Singh"];
@@ -248,12 +256,10 @@
       resultDiv.textContent = `😮 Your Pichle Janm Ka Naam Tha: ${randomName}`;
       resultDiv.style.display = "block";
     }
-
     function toggleSettings() {
       const box = document.getElementById("settingsBox");
       box.style.display = box.style.display === "block" ? "none" : "block";
     }
-
     function checkCode() {
       playClick();
       const code = document.getElementById("codeInput").value.trim();
@@ -263,7 +269,6 @@
         alert("Wrong code! Check the video description.");
       }
     }
-
     function calculateFuture() {
       playClick();
       const name = document.getElementById("name").value.trim().toUpperCase();
@@ -293,8 +298,29 @@
       resultDiv.textContent = resultText;
       resultDiv.style.display = "block";
     }
-
-    // 🎮 Marriage Predictor Logic
+    function revealFunnyFace() {
+      playClick();
+      const name = document.getElementById("faceName").value.trim();
+      const age = parseInt(document.getElementById("faceAge").value);
+      const resultDiv = document.getElementById("faceResult");
+      if (!name || isNaN(age)) {
+        alert("Please enter valid name and age.");
+        return;
+      }
+      const faces = [
+        "😂 You look like someone who laughs at their own jokes!",
+        "🤓 You have the ultimate nerd face – in a cute way!",
+        "😎 Your face says 'Swag Overload'!",
+        "😜 Mischief Maker Alert! That face is up to something!",
+        "😇 Innocent? Or just acting? Hmm...",
+        "🤠 You look like you just walked out of a cowboy movie!",
+        "👽 Alien vibes detected. Too advanced for this world!",
+        "🤖 Your face is 99% human, 1% AI. Impressive!"
+      ];
+      const chosenFace = faces[Math.floor(Math.random() * faces.length)];
+      resultDiv.textContent = `Hey ${name}, Age ${age} — ${chosenFace}`;
+      resultDiv.style.display = "block";
+    }
     let holdTimer, holdStartTime;
     const marriageDates = [
       "🗓 2026 – Start shopping for your wedding outfit! 🛍",
@@ -306,7 +332,6 @@
       "🗓 2042 – After your 5th job change 😆",
       "🗓 Next Year – Are you even ready? 😳"
     ];
-
     function startHold() {
       navigator.vibrate?.(100);
       holdStartTime = Date.now();
@@ -316,11 +341,9 @@
         navigator.vibrate?.([200, 100, 200]);
       }, 5000);
     }
-
     function endHold() {
       clearTimeout(holdTimer);
     }
-
     function cancelHold() {
       clearTimeout(holdTimer);
     }
