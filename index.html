@@ -260,7 +260,7 @@
       alert("✅ Upgrade Successful!");
     }
 
-    // 🔐 Triple Tap Password Access for Advance
+    // 🔐 Triple Tap Password Access for Advance with two-step password
     let tapCount = 0;
     const advanceTap = document.getElementById("advanceTap");
 
@@ -268,14 +268,22 @@
       tapCount++;
       if (tapCount >= 3) {
         tapCount = 0;
-        const pass = prompt("🔐 Enter Advance Password:");
-        if (pass === "18+") {
-          window.open("https://arvinddara.github.io/ADBOSSADVANCE/", "_blank");
+
+        // First password prompt
+        const pass1 = prompt("🔐 Enter Advance Password (1st step):");
+        if (pass1 === "18+") {
+          // Second password prompt
+          const pass2 = prompt("🔐 Enter Advance Password (2nd step):");
+          if (pass2 === "advancex") {
+            window.open("https://arvinddara.github.io/ADBOSSADVANCE/", "_blank");
+          } else {
+            alert("❌ Wrong second password!");
+          }
         } else {
-          alert("❌ Wrong password!");
+          alert("❌ Wrong first password!");
         }
       }
-      setTimeout(() => { tapCount = 0 }, 3000); // Reset count after 3 seconds
+      setTimeout(() => { tapCount = 0 }, 3000); // Reset tap count after 3 seconds
     });
   </script>
 
