@@ -5,283 +5,229 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ADBOSS Future Calculator 😎</title>
   <style>
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+    }
+
     body {
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(to bottom right, #e0ffe0, #c0f0ff);
-      padding: 20px;
       text-align: center;
+      overflow-x: hidden;
+      transition: background 1s ease;
     }
+
     h1 {
-      font-size: 36px;
-      margin-bottom: 20px;
-      color: #111;
-      font-weight: bold;
-    }
-    input, button {
-      padding: 12px;
-      margin: 10px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      width: 90%;
-      max-width: 400px;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    button {
-      background-color: #4CAF50;
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-    #result, #pastResult, #faceResult {
+      font-size: 38px;
       margin-top: 30px;
-      white-space: pre-wrap;
-      background-color: #f0fff0;
-      padding: 20px;
-      border-radius: 12px;
-      border: 1px solid #a0d0a0;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-      display: none;
+      color: #0c0c0c;
+      font-weight: 800;
+      letter-spacing: 1px;
     }
-    footer {
-      margin-top: 40px;
-      font-size: 14px;
-      color: #777;
+
+    .home-options {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      margin: 40px 20px;
     }
+
+    .option-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 25px 20px;
+      width: 260px;
+      font-size: 20px;
+      font-weight: 600;
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+      transition: transform 0.4s, box-shadow 0.4s, background 0.4s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      animation: floatCard 5s ease-in-out infinite;
+    }
+
+    .option-card:hover {
+      transform: scale(1.06) rotateY(10deg);
+      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Settings Button */
     .settings-btn {
       position: fixed;
       top: 20px;
       right: 20px;
-      background: #888;
-      color: #fff;
+      background: #111;
+      color: white;
       border: none;
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      font-size: 20px;
+      width: 60px;
+      height: 60px;
+      font-size: 26px;
       cursor: pointer;
-    }
-    #settingsBox {
-      display: none;
-      position: fixed;
-      top: 80px;
-      right: 20px;
-      background: #fff;
-      border: 1px solid #ccc;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      text-align: left;
-      max-width: 300px;
-    }
-    #superPower {
-      display: none;
-      margin-top: 20px;
-      background: #fff0e0;
-      padding: 20px;
-      border: 2px dashed #f90;
-      border-radius: 10px;
-      font-weight: bold;
-      font-size: 16px;
-    }
-    #introScreen, #homeScreen, #mainScreen, #pastLifeScreen, #gameScreen, #guessFaceScreen {
-      display: none;
-    }
-    #introScreen {
-      display: block;
-      font-size: 48px;
-      color: #333;
-      margin-top: 150px;
-      animation: fadeOut 1s ease 4s forwards;
-    }
-    @keyframes fadeOut {
-      to {
-        opacity: 0;
-        visibility: hidden;
-      }
+      box-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+      transition: transform 0.5s ease;
+      z-index: 999;
+      animation: rotateGear 4s linear infinite;
     }
 
-    .home-options {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      margin-top: 30px;
-      padding: 0 20px;
+    @keyframes rotateGear {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
-    .option-card {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      cursor: pointer;
-      font-size: 18px;
-      transition: transform 0.2s, background-color 0.3s;
+
+    /* Flash on upgrade */
+    .upgraded-flash {
+      animation: glowFlash 1.5s ease-in-out;
     }
-    .option-card:hover {
-      background: #d0f8e0;
-      transform: scale(1.05);
+
+    @keyframes glowFlash {
+      0% { background-color: #ffffff; }
+      50% { background-color: #a0ffd4; }
+      100% { background-color: transparent; }
     }
+
+    /* Intro screen */
+    #introScreen {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 40px;
+      color: #333;
+      height: 100vh;
+      animation: introZoom 4s forwards;
+    }
+
+    #introScreen h1 {
+      font-size: 50px;
+      animation: sparkle 2s infinite ease-in-out;
+    }
+
+    @keyframes introZoom {
+      0% { opacity: 1; transform: scale(1); }
+      80% { opacity: 1; transform: scale(1.5); }
+      100% { opacity: 0; transform: scale(2); visibility: hidden; }
+    }
+
+    @keyframes sparkle {
+      0%, 100% { color: #ff00cc; }
+      50% { color: #00ccff; }
+    }
+
+    /* Fade-in for home screen */
+    #homeScreen.hidden {
+      opacity: 0;
+      transform: scale(0.95);
+      transition: all 0.6s ease-in;
+    }
+
+    #homeScreen {
+      opacity: 1;
+      transform: scale(1);
+      transition: all 0.6s ease-in;
+    }
+
+    /* Ripple effect */
+    .option-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      background: rgba(0, 255, 255, 0.3);
+      animation: ripple 0.6s linear;
+    }
+
+    .option-card:active::after {
+      width: 200px;
+      height: 200px;
+      top: 50%;
+      left: 50%;
+      margin-left: -100px;
+      margin-top: -100px;
+      transform: scale(1);
+    }
+
+    @keyframes ripple {
+      to { opacity: 0; transform: scale(2); }
+    }
+
+    .hidden { display: none; }
+
+    audio { display: none; }
   </style>
 </head>
 <body>
 
-  <!-- 🎵 AUDIO -->
-  <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
-  <audio id="clickSound" src="https://assets.mixkit.co/sfx/preview/mixkit-positive-interface-beep-221.mp3"></audio>
+  <!-- 🔊 Sounds -->
   <audio id="introSound" src="https://assets.mixkit.co/sfx/preview/mixkit-epic-orchestra-transition-229.mp3"></audio>
+  <audio id="successSound" src="https://assets.mixkit.co/sfx/preview/mixkit-game-level-up-1938.mp3"></audio>
 
-  <!-- ✨ INTRO SCREEN -->
+  <!-- 🌟 Intro -->
   <div id="introScreen">
     <h1>✨ Welcome to ADBOSS ✨</h1>
     <p>Loading your future...</p>
   </div>
 
-  <!-- 🏠 HOME SCREEN -->
-  <div id="homeScreen">
+  <!-- 🏠 Home -->
+  <div id="homeScreen" class="hidden">
     <h1>🌟 Welcome to ADBOSS 🌟</h1>
-    <div class="home-options">
-      <div class="option-card" onclick="startApp()">🚀 Start</div>
-      <div class="option-card" onclick="openPastLife()">🔮 Pichle Janm Ka Naam</div>
-      <div class="option-card" onclick="openGame()">🎮 Play Game</div>
-      <div class="option-card" onclick="openGuessFace()">🤪 Guess Your Face</div>
-      <div class="option-card" onclick="window.open('https://arvinddara.github.io/FREEFIRE/', '_blank')">🔥 Khelega Free Fire</div>
-      <div class="option-card" onclick="window.open('https://arvinddara.github.io/FREEFIRE2/', '_blank')">📋 View All Features</div>
+    <div class="home-options" id="homeOptions">
+      <div class="option-card" onclick="window.open('https://arvinddara.github.io/FREEFIRE/', '_blank')">
+        🔥 Khelega Free Fire
+      </div>
+      <div class="option-card" onclick="window.open('https://arvinddara.github.io/FREEFIRE2/', '_blank')">
+        📋 View All Features
+      </div>
     </div>
   </div>
 
-  <!-- 🔮 PAST LIFE -->
-  <div id="pastLifeScreen">
-    <h1>Pichle Janm Ka Naam 🔁</h1>
-    <input type="text" id="pastName" placeholder="Apna Naam Dalo" />
-    <button onclick="showPastLife()">Batao Naam</button>
-    <div id="pastResult"></div>
-    <button onclick="goHome()">⬅️ Back</button>
-  </div>
+  <!-- ⚙️ Settings -->
+  <button class="settings-btn" onclick="askCode()">⚙️</button>
 
-  <!-- 🤪 GUESS FACE -->
-  <div id="guessFaceScreen">
-    <h1>Guess Your Face 😆</h1>
-    <input type="text" id="faceInput" placeholder="Apna Naam Dalo" />
-    <button onclick="guessFace()">Guess Karo</button>
-    <div id="faceResult"></div>
-    <button onclick="goHome()">⬅️ Back</button>
-  </div>
-
-  <!-- 🚀 MAIN SCREEN -->
-  <div id="mainScreen">
-    <h1>Future Calculator 🔮</h1>
-    <input type="text" id="nameInput" placeholder="Enter your name" />
-    <input type="number" id="ageInput" placeholder="Enter your age" />
-    <button onclick="calculateFuture()">🔍 Show My Future</button>
-    <div id="result"></div>
-    <div id="superPower"></div>
-    <button onclick="goHome()">⬅️ Back</button>
-  </div>
-
-  <!-- 🎮 GAME SCREEN -->
-  <div id="gameScreen">
-    <h1>Mini Game 🎯</h1>
-    <p>Pick a number (1-5):</p>
-    <input type="number" id="guess" min="1" max="5" />
-    <button onclick="checkGuess()">Try Luck</button>
-    <div id="gameResult"></div>
-    <button onclick="goHome()">⬅️ Back</button>
-  </div>
-
+  <!-- 🔧 Scripts -->
   <script>
-    // Intro timeout
     setTimeout(() => {
       document.getElementById("introScreen").style.display = "none";
-      document.getElementById("homeScreen").style.display = "block";
+      const homeScreen = document.getElementById("homeScreen");
+      homeScreen.classList.remove("hidden");
       document.getElementById("introSound").play();
-      document.getElementById("bgMusic").play();
     }, 4000);
 
-    function playClick() {
-      document.getElementById("clickSound").play();
-    }
-
-    function startApp() {
-      playClick();
-      document.getElementById("homeScreen").style.display = "none";
-      document.getElementById("mainScreen").style.display = "block";
-    }
-
-    function openPastLife() {
-      playClick();
-      document.getElementById("homeScreen").style.display = "none";
-      document.getElementById("pastLifeScreen").style.display = "block";
-    }
-
-    function openGuessFace() {
-      playClick();
-      document.getElementById("homeScreen").style.display = "none";
-      document.getElementById("guessFaceScreen").style.display = "block";
-    }
-
-    function openGame() {
-      playClick();
-      document.getElementById("homeScreen").style.display = "none";
-      document.getElementById("gameScreen").style.display = "block";
-    }
-
-    function goHome() {
-      document.getElementById("mainScreen").style.display = "none";
-      document.getElementById("pastLifeScreen").style.display = "none";
-      document.getElementById("guessFaceScreen").style.display = "none";
-      document.getElementById("gameScreen").style.display = "none";
-      document.getElementById("result").style.display = "none";
-      document.getElementById("pastResult").style.display = "none";
-      document.getElementById("faceResult").style.display = "none";
-      document.getElementById("superPower").style.display = "none";
-      document.getElementById("homeScreen").style.display = "block";
-    }
-
-    function calculateFuture() {
-      const name = document.getElementById("nameInput").value;
-      const age = document.getElementById("ageInput").value;
-      if (!name || !age) return alert("Please fill both fields!");
-      const professions = ["Scientist", "Actor", "IAS", "Coder", "Gamer", "Investor"];
-      const future = professions[Math.floor(Math.random() * professions.length)];
-      document.getElementById("result").innerText = `Hey ${name}, at age ${age} you will become a ${future}!`;
-      document.getElementById("result").style.display = "block";
-      if (future === "Investor" || future === "Scientist") {
-        document.getElementById("superPower").innerText = "💥 Bonus: You also get a secret superpower!";
-        document.getElementById("superPower").style.display = "block";
+    function askCode() {
+      const code = prompt("🔐 Access Locked!\nCode pane ke liye jao:\nhttps://youtube.com/@ravi..bhai_0029?si=BzQiKXj1XXSWyZCf\n\nEnter the Code:");
+      if (code === "1722") {
+        upgradeHomeScreen();
       } else {
-        document.getElementById("superPower").style.display = "none";
+        alert("❌ Wrong code. Try again!");
       }
     }
 
-    function showPastLife() {
-      const name = document.getElementById("pastName").value;
-      const pastNames = ["Akbar", "Ashoka", "Chandralekha", "Raja Rani", "Alien", "Animal"];
-      const result = pastNames[Math.floor(Math.random() * pastNames.length)];
-      document.getElementById("pastResult").innerText = `${name}, tum pichle janm me ${result} the!`;
-      document.getElementById("pastResult").style.display = "block";
-    }
+    function upgradeHomeScreen() {
+      const homeOptions = document.getElementById("homeOptions");
+      const newCard = document.createElement("div");
+      newCard.className = "option-card";
+      newCard.innerText = "⚡ Click to Advance";
+      newCard.onclick = () => window.open('https://arvinddara.github.io/ADVANCE/', '_blank');
+      homeOptions.appendChild(newCard);
 
-    function guessFace() {
-      const name = document.getElementById("faceInput").value;
-      const faces = ["🐵 Bandar jaise", "😎 Stylish", "😂 Joker type", "👽 Alien face", "👑 Royal Look"];
-      const result = faces[Math.floor(Math.random() * faces.length)];
-      document.getElementById("faceResult").innerText = `${name}, tumhara face hai: ${result}`;
-      document.getElementById("faceResult").style.display = "block";
-    }
+      document.body.classList.add("upgraded-flash");
+      document.getElementById("successSound").play();
 
-    function checkGuess() {
-      const guess = parseInt(document.getElementById("guess").value);
-      const correct = Math.floor(Math.random() * 5) + 1;
-      const msg = guess === correct ? "🎉 Sahi pakde!" : `😢 Galat. Correct number tha ${correct}`;
-      document.getElementById("gameResult").innerText = msg;
+      setTimeout(() => {
+        document.body.classList.remove("upgraded-flash");
+      }, 1500);
+
+      alert("✅ Upgrade Successful!");
     }
   </script>
 
