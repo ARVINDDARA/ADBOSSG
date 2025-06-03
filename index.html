@@ -61,7 +61,6 @@
       50% { transform: translateY(-10px); }
     }
 
-    /* Settings Button */
     .settings-btn {
       position: fixed;
       top: 20px;
@@ -85,7 +84,6 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* Flash on upgrade */
     .upgraded-flash {
       animation: glowFlash 1.5s ease-in-out;
     }
@@ -96,7 +94,6 @@
       100% { background-color: transparent; }
     }
 
-    /* Intro screen */
     #introScreen {
       display: flex;
       flex-direction: column;
@@ -124,7 +121,6 @@
       50% { color: #00ccff; }
     }
 
-    /* Fade-in for home screen */
     #homeScreen.hidden {
       opacity: 0;
       transform: scale(0.95);
@@ -137,7 +133,6 @@
       transition: all 0.6s ease-in;
     }
 
-    /* Ripple effect */
     .option-card::after {
       content: "";
       position: absolute;
@@ -164,6 +159,27 @@
     .hidden { display: none; }
 
     audio { display: none; }
+
+    /* 🔥 Advanced Service Corner Text */
+    .advanced-service {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      font-size: 13px;
+      background: #000000cc;
+      color: #00ffff;
+      padding: 6px 12px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #0ff;
+      cursor: pointer;
+      z-index: 998;
+      animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { box-shadow: 0 0 5px #0ff; }
+      to { box-shadow: 0 0 20px #0ff, 0 0 30px #0ff; }
+    }
   </style>
 </head>
 <body>
@@ -193,6 +209,11 @@
 
   <!-- ⚙️ Settings -->
   <button class="settings-btn" onclick="askCode()">⚙️</button>
+
+  <!-- 🌟 ADBOSS ADVANCE SERVICE -->
+  <div class="advanced-service" id="advanceTap">
+    ADBOSS ADVANCE SERVICE
+  </div>
 
   <!-- 🔧 Scripts -->
   <script>
@@ -229,6 +250,24 @@
 
       alert("✅ Upgrade Successful!");
     }
+
+    // 🔐 Triple Tap Password Access for Advance
+    let tapCount = 0;
+    const advanceTap = document.getElementById("advanceTap");
+
+    advanceTap.addEventListener("click", () => {
+      tapCount++;
+      if (tapCount >= 3) {
+        tapCount = 0;
+        const pass = prompt("🔐 Enter Advance Password:");
+        if (pass === "18+") {
+          window.open("https://arvinddara.github.io/ADBOSSADVANCE/", "_blank");
+        } else {
+          alert("❌ Wrong password!");
+        }
+      }
+      setTimeout(() => { tapCount = 0 }, 3000); // Reset count after 3 seconds
+    });
   </script>
 
 </body>
