@@ -160,7 +160,7 @@
 
     audio { display: none; }
 
-    /* ADBOSS Button */
+    /* 🔥 Advanced Service Corner Text */
     .advanced-service {
       position: fixed;
       bottom: 20px;
@@ -182,7 +182,7 @@
     }
   </style>
 
-  <!-- Google Analytics -->
+  <!-- Google Analytics Tracking Code -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-TNBWGF5ZF0"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -216,12 +216,12 @@
     </div>
   </div>
 
-  <!-- ⚙️ Settings Button -->
+  <!-- ⚙️ Settings -->
   <button class="settings-btn" onclick="askCode()">⚙️</button>
 
-  <!-- 🛡️ ADBOSS Button (Bottom Left) -->
+  <!-- 🌟 ADBOSS ADVANCE SERVICE -->
   <div class="advanced-service" id="advanceTap">
-    ADBOSS
+    ADBOSS ADVANCE SERVICE
   </div>
 
   <!-- 🔧 Scripts -->
@@ -249,3 +249,35 @@
       newCard.innerText = "⚡ Click to Advance";
       newCard.onclick = () => window.open('https://arvinddara.github.io/ADVANCE/', '_blank');
       homeOptions.appendChild(newCard);
+
+      document.body.classList.add("upgraded-flash");
+      document.getElementById("successSound").play();
+
+      setTimeout(() => {
+        document.body.classList.remove("upgraded-flash");
+      }, 1500);
+
+      alert("✅ Upgrade Successful!");
+    }
+
+    // 🔐 Triple Tap Password Access for Advance
+    let tapCount = 0;
+    const advanceTap = document.getElementById("advanceTap");
+
+    advanceTap.addEventListener("click", () => {
+      tapCount++;
+      if (tapCount >= 3) {
+        tapCount = 0;
+        const pass = prompt("🔐 Enter Advance Password:");
+        if (pass === "18+") {
+          window.open("https://arvinddara.github.io/ADBOSSADVANCE/", "_blank");
+        } else {
+          alert("❌ Wrong password!");
+        }
+      }
+      setTimeout(() => { tapCount = 0 }, 3000); // Reset count after 3 seconds
+    });
+  </script>
+
+</body>
+</html>
