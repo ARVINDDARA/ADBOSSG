@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ADBOSS Future Calculator 😎</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     /* Global Reset & Body Styles */
     * {
@@ -17,7 +17,7 @@
       font-family: 'Orbitron', sans-serif; /* Futuristic font */
       background: linear-gradient(135deg, #2a003f, #001f3f, #0a0a2a); /* Darker, more futuristic gradient */
       background-size: 400% 400%;
-      animation: gradientShift 15s ease infinite; /* Subtle background animation */
+      animation: gradientShift 20s ease infinite alternate; /* Slower, smoother background animation */
       color: #e0e0e0; /* Lighter text for contrast */
       text-align: center;
       overflow-x: hidden;
@@ -27,8 +27,7 @@
     /* Keyframe for background animation */
     @keyframes gradientShift {
       0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
     }
 
     /* Main Heading */
@@ -39,7 +38,7 @@
       font-weight: 700;
       letter-spacing: 2px;
       text-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff; /* Stronger glow */
-      animation: pulsateGlow 2s infinite alternate;
+      animation: pulsateGlow 2.5s infinite alternate; /* Smoother pulsation */
     }
 
     @keyframes pulsateGlow {
@@ -66,12 +65,12 @@
       font-weight: 600;
       color: #aaffff; /* Lighter text for contrast */
       box-shadow: 0 15px 30px rgba(0, 255, 255, 0.2), inset 0 0 15px rgba(0, 255, 255, 0.1); /* Inner and outer glow */
-      transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+      transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, background 0.3s ease-out; /* Smoother transitions */
       cursor: pointer;
       position: relative;
       overflow: hidden;
       transform-style: preserve-3d;
-      animation: floatCard 5s ease-in-out infinite;
+      animation: floatCard 6s ease-in-out infinite; /* Slower, more subtle float */
       border: 2px solid #00ffff; /* Border for subtle glow */
     }
 
@@ -83,7 +82,7 @@
 
     @keyframes floatCard {
       0%, 100% { transform: translateY(0px) rotateY(0deg); }
-      50% { transform: translateY(-15px) rotateY(3deg); } /* More dynamic float */
+      50% { transform: translateY(-10px) rotateY(2deg); } /* More subtle float */
     }
 
     /* Settings Button */
@@ -102,7 +101,7 @@
       box-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff; /* Stronger glow */
       transition: transform 0.5s ease;
       z-index: 999;
-      animation: rotateGear 3s linear infinite, glowPulse 2s infinite alternate; /* Faster rotate, added pulse */
+      animation: rotateGear 4s linear infinite, glowPulse 2.5s infinite alternate; /* Smoother animations */
     }
 
     @keyframes rotateGear {
@@ -141,7 +140,7 @@
 
     #introScreen h1 {
       font-size: 60px; /* Even larger */
-      animation: sparkle 1.5s infinite ease-in-out; /* Faster sparkle */
+      animation: sparkle 2s infinite ease-in-out; /* Slower sparkle */
       margin-bottom: 20px;
     }
 
@@ -170,7 +169,7 @@
     }
 
     /* Ripple Effect on Click */
-    .option-card::before { /* Changed to ::before to avoid conflict with existing content */
+    .option-card::before {
       content: "";
       position: absolute;
       top: 50%;
@@ -181,6 +180,7 @@
       border-radius: 50%;
       transform: translate(-50%, -50%);
       opacity: 0;
+      pointer-events: none; /* Ensure clicks pass through */
     }
 
     .option-card:active::before {
@@ -209,13 +209,47 @@
       box-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff; /* Stronger glow */
       cursor: pointer;
       z-index: 998;
-      animation: glow 1.8s infinite alternate; /* Slightly slower glow */
+      animation: glow 2s infinite alternate; /* Slower, smoother glow */
       border: 1px solid #00ffff; /* Border for subtle definition */
     }
 
     @keyframes glow {
       from { box-shadow: 0 0 8px #00ffff, 0 0 15px #00ffff; }
       to { box-shadow: 0 0 25px #00ffff, 0 0 40px #00ffff; }
+    }
+
+    /* Panch Pandavs Coming Soon Page Styling */
+    #comingSoonScreen {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #1a002f, #000a1f, #050515);
+      color: #00ffcc;
+      font-family: 'Press Start 2P', cursive; /* Best font for this! */
+      font-size: 2.5em;
+      text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+      text-align: center;
+      animation: fadeIn 1s ease-out forwards;
+    }
+
+    #comingSoonScreen h2 {
+      margin-bottom: 30px;
+      font-size: 1.2em;
+      letter-spacing: 2px;
+    }
+
+    #countdown {
+      font-size: 1.8em;
+      margin-top: 20px;
+      color: #ffcc00; /* Yellow for countdown */
+      text-shadow: 0 0 8px #ffcc00;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
 
     /* Responsive Adjustments */
@@ -252,6 +286,15 @@
         font-size: 12px;
         padding: 6px 10px;
       }
+      #comingSoonScreen {
+        font-size: 1.5em;
+      }
+      #comingSoonScreen h2 {
+        font-size: 0.8em;
+      }
+      #countdown {
+        font-size: 1em;
+      }
     }
   </style>
 
@@ -282,6 +325,9 @@
       <div class="option-card" onclick="window.open('https://arvinddara.github.io/FREEFIRE2/', '_blank')">
         📋 View All Features
       </div>
+      <div class="option-card" onclick="showComingSoon()">
+        ✨ TRY PANCH PANDAVS ✨
+      </div>
     </div>
   </div>
 
@@ -291,7 +337,13 @@
     ADBOSS ADVANCE SERVICE
   </div>
 
+  <div id="comingSoonScreen" class="hidden">
+    <h2>GAME WILL BE COMING SOON</h2>
+    <div id="countdown"></div>
+  </div>
+
   <script>
+    // Initial load timeout
     setTimeout(() => {
       document.getElementById("introScreen").style.display = "none";
       const homeScreen = document.getElementById("homeScreen");
@@ -299,6 +351,7 @@
       document.getElementById("introSound").play();
     }, 4000);
 
+    // Settings code access
     function askCode() {
       const code = prompt("🔐 Access Locked!\nCode pane ke liye jao:\nhttps://youtube.com/@ravi..bhai_0029?si=BzQiKXj1XXSWyZCf\n\nEnter the Code:");
       if (code === "1722") {
@@ -308,6 +361,7 @@
       }
     }
 
+    // Upgrade Home Screen Function
     function upgradeHomeScreen() {
       const homeOptions = document.getElementById("homeOptions");
       const newCard = document.createElement("div");
@@ -326,7 +380,7 @@
       alert("✅ Upgrade Successful!");
     }
 
-    // 🔐 Triple Tap Password Access for Advance with two-step password
+    // Triple Tap Password Access for Advance with two-step password
     let tapCount = 0;
     const advanceTap = document.getElementById("advanceTap");
 
@@ -351,6 +405,49 @@
       }
       setTimeout(() => { tapCount = 0 }, 3000); // Reset tap count after 3 seconds
     });
+
+    // --- Panch Pandavs Coming Soon Logic ---
+    const COMING_SOON_KEY = 'panchPandavsComingSoonEndTime';
+    const REDIRECT_URL = 'https://arvinddara.github.io/PANCH/';
+
+    function showComingSoon() {
+      document.getElementById("homeScreen").classList.add("hidden"); // Hide home screen
+      document.getElementById("settings-btn").style.display = "none"; // Hide settings button
+      document.getElementById("advanceTap").style.display = "none"; // Hide advance service text
+
+      const comingSoonScreen = document.getElementById("comingSoonScreen");
+      comingSoonScreen.classList.remove("hidden"); // Show coming soon screen
+
+      let endTime = localStorage.getItem(COMING_SOON_KEY);
+      if (!endTime || new Date().getTime() > parseInt(endTime)) {
+        // If no end time or past, set new 48-hour countdown
+        endTime = new Date().getTime() + (48 * 60 * 60 * 1000); // 48 hours in milliseconds
+        localStorage.setItem(COMING_SOON_KEY, endTime);
+      } else {
+        endTime = parseInt(endTime);
+      }
+
+      const countdownElement = document.getElementById("countdown");
+
+      const updateCountdown = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = endTime - now;
+
+        if (distance < 0) {
+          clearInterval(updateCountdown);
+          countdownElement.innerHTML = "Opening game now...";
+          window.location.href = REDIRECT_URL; // Redirect
+          localStorage.removeItem(COMING_SOON_KEY); // Clear stored time
+          return;
+        }
+
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        countdownElement.innerHTML = `${hours}H ${minutes}M ${seconds}S`;
+      }, 1000); // Update every second
+    }
   </script>
 
 </body>
