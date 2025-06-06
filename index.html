@@ -4,7 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ADBOSS Future Calculator 😎</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <style>
+    /* Global Reset & Body Styles */
     * {
       box-sizing: border-box;
       padding: 0;
@@ -12,71 +14,95 @@
     }
 
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom right, #e0ffe0, #c0f0ff);
+      font-family: 'Orbitron', sans-serif; /* Futuristic font */
+      background: linear-gradient(135deg, #2a003f, #001f3f, #0a0a2a); /* Darker, more futuristic gradient */
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite; /* Subtle background animation */
+      color: #e0e0e0; /* Lighter text for contrast */
       text-align: center;
       overflow-x: hidden;
       transition: background 1s ease;
     }
 
-    h1 {
-      font-size: 38px;
-      margin-top: 30px;
-      color: #0c0c0c;
-      font-weight: 800;
-      letter-spacing: 1px;
+    /* Keyframe for background animation */
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
+    /* Main Heading */
+    h1 {
+      font-size: 44px;
+      margin-top: 40px;
+      color: #00ffff; /* Cyberpunk blue */
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff; /* Stronger glow */
+      animation: pulsateGlow 2s infinite alternate;
+    }
+
+    @keyframes pulsateGlow {
+      from { text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; }
+      to { text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 40px #00ffff; }
+    }
+
+    /* Home Options Container */
     .home-options {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 25px;
-      margin: 40px 20px;
+      gap: 30px; /* Increased gap */
+      margin: 60px 20px; /* More margin */
     }
 
+    /* Option Card Styling */
     .option-card {
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 25px 20px;
-      width: 260px;
-      font-size: 20px;
+      background: rgba(10, 25, 40, 0.9); /* Darker, semi-transparent */
+      border-radius: 20px; /* More rounded */
+      padding: 30px 25px; /* Increased padding */
+      width: 280px; /* Slightly wider */
+      font-size: 22px; /* Larger font */
       font-weight: 600;
-      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
-      transition: transform 0.4s, box-shadow 0.4s, background 0.4s;
+      color: #aaffff; /* Lighter text for contrast */
+      box-shadow: 0 15px 30px rgba(0, 255, 255, 0.2), inset 0 0 15px rgba(0, 255, 255, 0.1); /* Inner and outer glow */
+      transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
       cursor: pointer;
       position: relative;
       overflow: hidden;
       transform-style: preserve-3d;
       animation: floatCard 5s ease-in-out infinite;
+      border: 2px solid #00ffff; /* Border for subtle glow */
     }
 
     .option-card:hover {
-      transform: scale(1.06) rotateY(10deg);
-      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.15);
+      transform: scale(1.08) rotateY(5deg); /* More pronounced 3D effect */
+      box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3), inset 0 0 20px rgba(0, 255, 255, 0.2);
+      background: rgba(15, 35, 55, 0.95); /* Slightly lighter on hover */
     }
 
     @keyframes floatCard {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
+      0%, 100% { transform: translateY(0px) rotateY(0deg); }
+      50% { transform: translateY(-15px) rotateY(3deg); } /* More dynamic float */
     }
 
+    /* Settings Button */
     .settings-btn {
       position: fixed;
-      top: 20px;
-      right: 20px;
-      background: #111;
-      color: white;
-      border: none;
+      top: 25px; /* Slightly more space from top */
+      right: 25px; /* Slightly more space from right */
+      background: #000000;
+      color: #00ffff;
+      border: 2px solid #00ffff; /* Border for glow */
       border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      font-size: 26px;
+      width: 65px; /* Slightly larger */
+      height: 65px;
+      font-size: 30px; /* Larger icon */
       cursor: pointer;
-      box-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+      box-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff; /* Stronger glow */
       transition: transform 0.5s ease;
       z-index: 999;
-      animation: rotateGear 4s linear infinite;
+      animation: rotateGear 3s linear infinite, glowPulse 2s infinite alternate; /* Faster rotate, added pulse */
     }
 
     @keyframes rotateGear {
@@ -84,105 +110,151 @@
       100% { transform: rotate(360deg); }
     }
 
+    @keyframes glowPulse {
+      from { box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; }
+      to { box-shadow: 0 0 20px #00ffff, 0 0 35px #00ffff; }
+    }
+
+    /* Upgrade Flash Effect */
     .upgraded-flash {
       animation: glowFlash 1.5s ease-in-out;
     }
 
     @keyframes glowFlash {
       0% { background-color: #ffffff; }
-      50% { background-color: #a0ffd4; }
+      50% { background-color: #00ffcc; } /* Brighter, more distinct color */
       100% { background-color: transparent; }
     }
 
+    /* Intro Screen */
     #introScreen {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      font-size: 40px;
-      color: #333;
+      font-size: 45px; /* Larger font */
+      color: #e0e0e0;
       height: 100vh;
-      animation: introZoom 4s forwards;
+      animation: introZoom 3.5s forwards; /* Faster zoom */
+      background: linear-gradient(45deg, #0a0a2a, #001f3f); /* Darker intro background */
     }
 
     #introScreen h1 {
-      font-size: 50px;
-      animation: sparkle 2s infinite ease-in-out;
+      font-size: 60px; /* Even larger */
+      animation: sparkle 1.5s infinite ease-in-out; /* Faster sparkle */
+      margin-bottom: 20px;
     }
 
     @keyframes introZoom {
       0% { opacity: 1; transform: scale(1); }
-      80% { opacity: 1; transform: scale(1.5); }
-      100% { opacity: 0; transform: scale(2); visibility: hidden; }
+      70% { opacity: 1; transform: scale(1.3); } /* Zoom less intensely for better transition */
+      100% { opacity: 0; transform: scale(1.5); visibility: hidden; } /* Fade out faster */
     }
 
     @keyframes sparkle {
-      0%, 100% { color: #ff00cc; }
-      50% { color: #00ccff; }
+      0%, 100% { color: #ff00ff; text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff; } /* Pink glow */
+      50% { color: #00ffff; text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; } /* Blue glow */
     }
 
+    /* Home Screen Transitions */
     #homeScreen.hidden {
       opacity: 0;
-      transform: scale(0.95);
-      transition: all 0.6s ease-in;
+      transform: scale(0.9); /* More subtle scale out */
+      transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bouncy transition */
     }
 
     #homeScreen {
       opacity: 1;
       transform: scale(1);
-      transition: all 0.6s ease-in;
+      transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
     }
 
-    .option-card::after {
+    /* Ripple Effect on Click */
+    .option-card::before { /* Changed to ::before to avoid conflict with existing content */
       content: "";
       position: absolute;
-      border-radius: 50%;
-      transform: scale(0);
-      background: rgba(0, 255, 255, 0.3);
-      animation: ripple 0.6s linear;
-    }
-
-    .option-card:active::after {
-      width: 200px;
-      height: 200px;
       top: 50%;
       left: 50%;
-      margin-left: -100px;
-      margin-top: -100px;
-      transform: scale(1);
+      width: 0;
+      height: 0;
+      background: rgba(0, 255, 255, 0.4); /* Brighter ripple */
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+    }
+
+    .option-card:active::before {
+      animation: ripple 0.6s linear forwards; /* Added forwards to keep last state */
     }
 
     @keyframes ripple {
-      to { opacity: 0; transform: scale(2); }
+      0% { opacity: 1; transform: translate(-50%, -50%) scale(0); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(2); }
     }
 
     .hidden { display: none; }
-
     audio { display: none; }
 
-    /* 🔥 Advanced Service Corner Text */
+    /* ADBOSS ADVANCE SERVICE Text */
     .advanced-service {
       position: fixed;
-      bottom: 20px;
-      left: 20px;
-      font-size: 13px;
-      background: #000000cc;
+      bottom: 25px;
+      left: 25px;
+      font-family: 'Share Tech Mono', monospace; /* Techy font for this text */
+      font-size: 14px;
+      background: #000000e0; /* Darker, more opaque */
       color: #00ffff;
-      padding: 6px 12px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #0ff;
+      padding: 8px 15px; /* Increased padding */
+      border-radius: 12px;
+      box-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff; /* Stronger glow */
       cursor: pointer;
       z-index: 998;
-      animation: glow 1.5s infinite alternate;
+      animation: glow 1.8s infinite alternate; /* Slightly slower glow */
+      border: 1px solid #00ffff; /* Border for subtle definition */
     }
 
     @keyframes glow {
-      from { box-shadow: 0 0 5px #0ff; }
-      to { box-shadow: 0 0 20px #0ff, 0 0 30px #0ff; }
+      from { box-shadow: 0 0 8px #00ffff, 0 0 15px #00ffff; }
+      to { box-shadow: 0 0 25px #00ffff, 0 0 40px #00ffff; }
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 32px;
+        margin-top: 25px;
+      }
+      .home-options {
+        margin: 30px 10px;
+        gap: 20px;
+      }
+      .option-card {
+        width: 200px;
+        padding: 20px 15px;
+        font-size: 18px;
+      }
+      .settings-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 22px;
+        top: 15px;
+        right: 15px;
+      }
+      #introScreen h1 {
+        font-size: 40px;
+      }
+      #introScreen p {
+        font-size: 30px;
+      }
+      .advanced-service {
+        bottom: 15px;
+        left: 15px;
+        font-size: 12px;
+        padding: 6px 10px;
+      }
     }
   </style>
 
-  <!-- Google Analytics Tracking Code -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-TNBWGF5ZF0"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -193,17 +265,14 @@
 </head>
 <body>
 
-  <!-- 🔊 Sounds -->
   <audio id="introSound" src="https://assets.mixkit.co/sfx/preview/mixkit-epic-orchestra-transition-229.mp3"></audio>
   <audio id="successSound" src="https://assets.mixkit.co/sfx/preview/mixkit-game-level-up-1938.mp3"></audio>
 
-  <!-- 🌟 Intro -->
   <div id="introScreen">
     <h1>✨ Welcome to ADBOSS ✨</h1>
     <p>Loading your future...</p>
   </div>
 
-  <!-- 🏠 Home -->
   <div id="homeScreen" class="hidden">
     <h1>🌟 Welcome to ADBOSS 🌟</h1>
     <div class="home-options" id="homeOptions">
@@ -216,15 +285,12 @@
     </div>
   </div>
 
-  <!-- ⚙️ Settings -->
   <button class="settings-btn" onclick="askCode()">⚙️</button>
 
-  <!-- 🌟 ADBOSS ADVANCE SERVICE -->
   <div class="advanced-service" id="advanceTap">
     ADBOSS ADVANCE SERVICE
   </div>
 
-  <!-- 🔧 Scripts -->
   <script>
     setTimeout(() => {
       document.getElementById("introScreen").style.display = "none";
