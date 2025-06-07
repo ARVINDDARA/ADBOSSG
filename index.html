@@ -17,11 +17,11 @@
       font-family: 'Orbitron', sans-serif; /* Futuristic font */
       background: linear-gradient(135deg, #2a003f, #001f3f, #0a0a2a); /* Darker, more futuristic gradient */
       background-size: 400% 400%;
-      animation: gradientShift 20s ease infinite alternate; /* Slower, smoother background animation */
+      animation: gradientShift 25s ease infinite alternate; /* Even slower, super smooth background animation */
       color: #e0e0e0; /* Lighter text for contrast */
       text-align: center;
       overflow-x: hidden;
-      transition: background 1s ease;
+      transition: background 1s ease-in-out; /* Smooth transition */
     }
 
     /* Keyframe for background animation */
@@ -38,7 +38,7 @@
       font-weight: 700;
       letter-spacing: 2px;
       text-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff; /* Stronger glow */
-      animation: pulsateGlow 2.5s infinite alternate; /* Smoother pulsation */
+      animation: pulsateGlow 3s infinite alternate; /* Smoother pulsation */
     }
 
     @keyframes pulsateGlow {
@@ -65,12 +65,12 @@
       font-weight: 600;
       color: #aaffff; /* Lighter text for contrast */
       box-shadow: 0 15px 30px rgba(0, 255, 255, 0.2), inset 0 0 15px rgba(0, 255, 255, 0.1); /* Inner and outer glow */
-      transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, background 0.3s ease-out; /* Smoother transitions */
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smoother transitions */
       cursor: pointer;
       position: relative;
       overflow: hidden;
       transform-style: preserve-3d;
-      animation: floatCard 6s ease-in-out infinite; /* Slower, more subtle float */
+      animation: floatCard 7s ease-in-out infinite; /* Slower, more subtle float */
       border: 2px solid #00ffff; /* Border for subtle glow */
     }
 
@@ -99,9 +99,9 @@
       font-size: 30px; /* Larger icon */
       cursor: pointer;
       box-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff; /* Stronger glow */
-      transition: transform 0.5s ease;
+      transition: transform 0.5s ease-in-out;
       z-index: 999;
-      animation: rotateGear 4s linear infinite, glowPulse 2.5s infinite alternate; /* Smoother animations */
+      animation: rotateGear 5s linear infinite, glowPulse 3s infinite alternate; /* Smoother animations */
     }
 
     @keyframes rotateGear {
@@ -134,20 +134,14 @@
       font-size: 45px; /* Larger font */
       color: #e0e0e0;
       height: 100vh;
-      animation: introZoom 3.5s forwards; /* Faster zoom */
       background: linear-gradient(45deg, #0a0a2a, #001f3f); /* Darker intro background */
+      /* No direct animation on introScreen, handled by JavaScript */
     }
 
     #introScreen h1 {
       font-size: 60px; /* Even larger */
-      animation: sparkle 2s infinite ease-in-out; /* Slower sparkle */
+      animation: sparkle 2.5s infinite ease-in-out; /* Slower sparkle */
       margin-bottom: 20px;
-    }
-
-    @keyframes introZoom {
-      0% { opacity: 1; transform: scale(1); }
-      70% { opacity: 1; transform: scale(1.3); } /* Zoom less intensely for better transition */
-      100% { opacity: 0; transform: scale(1.5); visibility: hidden; } /* Fade out faster */
     }
 
     @keyframes sparkle {
@@ -181,6 +175,7 @@
       transform: translate(-50%, -50%);
       opacity: 0;
       pointer-events: none; /* Ensure clicks pass through */
+      transition: none; /* Important: remove transition from pseudo-element */
     }
 
     .option-card:active::before {
@@ -192,7 +187,7 @@
       100% { opacity: 0; transform: translate(-50%, -50%) scale(2); }
     }
 
-    .hidden { display: none; }
+    .hidden { display: none !important; } /* Important for reliable hiding */
     audio { display: none; }
 
     /* ADBOSS ADVANCE SERVICE Text */
@@ -209,7 +204,7 @@
       box-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff; /* Stronger glow */
       cursor: pointer;
       z-index: 998;
-      animation: glow 2s infinite alternate; /* Slower, smoother glow */
+      animation: glow 2.5s infinite alternate; /* Slower, smoother glow */
       border: 1px solid #00ffff; /* Border for subtle definition */
     }
 
@@ -240,7 +235,7 @@
     }
 
     #comingSoonScreen.show { /* New class to control visibility */
-      display: flex;
+      display: flex !important; /* Force display when 'show' class is present */
     }
 
     #comingSoonScreen h2 {
@@ -352,13 +347,21 @@
   </div>
 
   <script>
-    // Initial load timeout
+    // Initial load timeout and intro sequence
     setTimeout(() => {
-      document.getElementById("introScreen").style.display = "none";
+      const introScreen = document.getElementById("introScreen");
       const homeScreen = document.getElementById("homeScreen");
-      homeScreen.classList.remove("hidden");
-      document.getElementById("introSound").play();
-    }, 4000);
+      
+      // Animate intro screen out
+      introScreen.style.animation = 'introZoom 3.5s forwards'; // Ensure animation runs
+
+      // Hide intro screen after animation
+      introScreen.addEventListener('animationend', () => {
+        introScreen.style.display = "none";
+        homeScreen.classList.remove("hidden"); // Show home screen
+        document.getElementById("introSound").play();
+      }, { once: true }); // Ensure event listener runs only once
+    }, 100); // Small delay to ensure CSS animation starts
 
     // Settings code access
     function askCode() {
@@ -418,21 +421,24 @@
     // --- Panch Pandavs Coming Soon Logic ---
     const COMING_SOON_KEY = 'panchPandavsComingSoonEndTime';
     const REDIRECT_URL = 'https://arvinddara.github.io/PANCH/';
+    let countdownInterval; // To store the interval ID
 
     function showComingSoon() {
       // Hide other elements
       document.getElementById("homeScreen").classList.add("hidden");
-      document.getElementById("settings-btn").style.display = "none";
-      document.getElementById("advanceTap").style.display = "none";
+      document.getElementById("settings-btn").classList.add("hidden"); /* Ensure it's hidden */
+      document.getElementById("advanceTap").classList.add("hidden"); /* Ensure it's hidden */
 
       const comingSoonScreen = document.getElementById("comingSoonScreen");
-      comingSoonScreen.classList.remove("hidden"); // Ensure it's shown!
-      comingSoonScreen.classList.add("show"); // Add the new 'show' class
+      comingSoonScreen.classList.remove("hidden"); // Remove 'hidden' class
+      comingSoonScreen.classList.add("show"); // Add 'show' class to apply flex display
 
       let endTime = localStorage.getItem(COMING_SOON_KEY);
-      if (!endTime || new Date().getTime() > parseInt(endTime)) {
+      const now = new Date().getTime();
+
+      if (!endTime || now > parseInt(endTime)) {
         // If no end time or past, set new 48-hour countdown from current time
-        endTime = new Date().getTime() + (48 * 60 * 60 * 1000); // 48 hours in milliseconds
+        endTime = now + (48 * 60 * 60 * 1000); // 48 hours in milliseconds
         localStorage.setItem(COMING_SOON_KEY, endTime);
       } else {
         endTime = parseInt(endTime);
@@ -440,15 +446,20 @@
 
       const countdownElement = document.getElementById("countdown");
 
-      const updateCountdown = setInterval(() => {
-        const now = new Date().getTime();
-        const distance = endTime - now;
+      // Clear any existing interval to prevent multiple timers
+      if (countdownInterval) {
+        clearInterval(countdownInterval);
+      }
+
+      countdownInterval = setInterval(() => {
+        const currentNow = new Date().getTime();
+        const distance = endTime - currentNow;
 
         if (distance < 0) {
-          clearInterval(updateCountdown);
+          clearInterval(countdownInterval);
           countdownElement.innerHTML = "Opening game now...";
-          window.location.href = REDIRECT_URL; // Redirect
           localStorage.removeItem(COMING_SOON_KEY); // Clear stored time
+          window.location.href = REDIRECT_URL; // Redirect
           return;
         }
 
@@ -459,6 +470,25 @@
         countdownElement.innerHTML = `${hours}H ${minutes}M ${seconds}S`;
       }, 1000); // Update every second
     }
+
+    // This ensures that if someone refreshes on the coming soon page, the timer resumes.
+    // Check if the coming soon screen should be active on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        const endTime = localStorage.getItem(COMING_SOON_KEY);
+        if (endTime && new Date().getTime() < parseInt(endTime)) {
+            // If there's an active countdown, show the coming soon screen immediately
+            document.getElementById("introScreen").style.display = "none";
+            document.getElementById("homeScreen").classList.add("hidden");
+            document.getElementById("settings-btn").classList.add("hidden");
+            document.getElementById("advanceTap").classList.add("hidden");
+            
+            const comingSoonScreen = document.getElementById("comingSoonScreen");
+            comingSoonScreen.classList.remove("hidden");
+            comingSoonScreen.classList.add("show");
+            showComingSoon(); // Re-initialize the countdown
+        }
+    });
+
   </script>
 
 </body>
