@@ -220,18 +220,27 @@
 
     /* Panch Pandavs Coming Soon Page Styling */
     #comingSoonScreen {
-      display: flex;
+      display: none; /* Hidden by default now */
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      position: fixed; /* Use fixed to cover entire viewport */
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background: linear-gradient(135deg, #1a002f, #000a1f, #050515);
       color: #00ffcc;
       font-family: 'Press Start 2P', cursive; /* Best font for this! */
       font-size: 2.5em;
       text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
       text-align: center;
+      z-index: 1000; /* Ensure it's on top */
       animation: fadeIn 1s ease-out forwards;
+    }
+
+    #comingSoonScreen.show { /* New class to control visibility */
+      display: flex;
     }
 
     #comingSoonScreen h2 {
@@ -331,7 +340,7 @@
     </div>
   </div>
 
-  <button class="settings-btn" onclick="askCode()">⚙️</button>
+  <button class="settings-btn" id="settings-btn" onclick="askCode()">⚙️</button>
 
   <div class="advanced-service" id="advanceTap">
     ADBOSS ADVANCE SERVICE
@@ -411,16 +420,18 @@
     const REDIRECT_URL = 'https://arvinddara.github.io/PANCH/';
 
     function showComingSoon() {
-      document.getElementById("homeScreen").classList.add("hidden"); // Hide home screen
-      document.getElementById("settings-btn").style.display = "none"; // Hide settings button
-      document.getElementById("advanceTap").style.display = "none"; // Hide advance service text
+      // Hide other elements
+      document.getElementById("homeScreen").classList.add("hidden");
+      document.getElementById("settings-btn").style.display = "none";
+      document.getElementById("advanceTap").style.display = "none";
 
       const comingSoonScreen = document.getElementById("comingSoonScreen");
-      comingSoonScreen.classList.remove("hidden"); // Show coming soon screen
+      comingSoonScreen.classList.remove("hidden"); // Ensure it's shown!
+      comingSoonScreen.classList.add("show"); // Add the new 'show' class
 
       let endTime = localStorage.getItem(COMING_SOON_KEY);
       if (!endTime || new Date().getTime() > parseInt(endTime)) {
-        // If no end time or past, set new 48-hour countdown
+        // If no end time or past, set new 48-hour countdown from current time
         endTime = new Date().getTime() + (48 * 60 * 60 * 1000); // 48 hours in milliseconds
         localStorage.setItem(COMING_SOON_KEY, endTime);
       } else {
