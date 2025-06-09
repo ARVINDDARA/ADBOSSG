@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ADBOSS 2.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
-        /* General Body Styles */
+        /* --- General Body Styles --- */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Press Start 2P', cursive; /* Applied retro font for consistent theme */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -15,31 +16,73 @@
             margin: 0;
             background-color: #1a1a2e; /* Dark background */
             color: #e0e0e0; /* Light text */
-            overflow: hidden;
+            overflow: hidden; /* Prevent scrollbars due to animation */
         }
 
-        /* Intro Screen Styles */
+        /* --- Intro Screen Styles --- */
         #intro-screen {
             text-align: center;
-            font-size: 3em;
+            font-size: 3.5em; /* Larger for impact */
             font-weight: bold;
             color: #00bcd4; /* Cyan color */
-            animation: fadeInOut 5s forwards; /* 5-second animation */
+            animation: glitchReveal 5s forwards; /* The 'dhasu' animation */
+            text-shadow: 0 0 10px rgba(0, 189, 212, 0.7), 0 0 20px rgba(0, 189, 212, 0.5); /* Glowing effect */
+            letter-spacing: 5px; /* Spacing for digital feel */
+            position: relative; /* Base for glitch effects */
         }
 
-        @keyframes fadeInOut {
-            0% { opacity: 0; transform: scale(0.8); }
-            20% { opacity: 1; transform: scale(1); }
-            80% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: scale(1.2); display: none; }
+        /* Keyframes for the 'Dhasu' Intro Animation */
+        @keyframes glitchReveal {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) translateY(-20px);
+                filter: blur(10px); /* Starts blurry */
+                text-shadow: none;
+                letter-spacing: -20px; /* Letters start squished */
+            }
+            10% {
+                opacity: 0.2;
+                transform: scale(0.9) translateY(0px);
+                filter: blur(5px);
+                text-shadow: none;
+                letter-spacing: -10px;
+            }
+            20% {
+                opacity: 0.5;
+                transform: scale(1) translateY(0px);
+                filter: blur(0px); /* Becomes clear */
+                text-shadow: 0 0 5px rgba(0, 189, 212, 0.4);
+                letter-spacing: 0px; /* Letters expand */
+            }
+            22% { /* Brief flicker part 1 */
+                opacity: 0.8;
+                transform: scale(1.01);
+            }
+            24% { /* Brief flicker part 2 */
+                opacity: 0.5;
+                transform: scale(0.99);
+            }
+            26% {
+                opacity: 1; /* Fully visible and stable */
+                transform: scale(1);
+            }
+            80% {
+                opacity: 1; /* Stays visible for a duration */
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0; /* Fades out */
+                transform: scale(1.2);
+                display: none; /* Hides the element completely */
+            }
         }
 
-        /* Home Screen Styles */
+        /* --- Home Screen Styles --- */
         #home-screen {
-            display: none; /* Hidden initially */
+            display: none; /* Hidden initially, shown after intro */
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 20px; /* Space between buttons */
             background-color: #2a2a4a; /* Slightly lighter dark background */
             padding: 40px;
             border-radius: 10px;
@@ -52,6 +95,8 @@
         #home-screen h1 {
             color: #4CAF50; /* Green for heading */
             margin-bottom: 20px;
+            font-size: 1.8em; /* Adjusted for this screen */
+            font-family: Arial, sans-serif; /* Override for a cleaner look */
         }
 
         .button {
@@ -65,22 +110,24 @@
             transition: background-color 0.3s ease;
             width: 80%;
             max-width: 300px;
+            font-family: Arial, sans-serif; /* Override for a cleaner look */
         }
 
         .button:hover {
             background-color: #0056b3;
         }
 
-        /* Server Busy Message */
+        /* --- Server Busy Message --- */
         #server-busy-message {
-            display: none;
+            display: none; /* Hidden initially */
             color: #ffcc00; /* Yellow for warning */
             margin-top: 20px;
             font-size: 1.1em;
             text-align: center;
+            font-family: Arial, sans-serif; /* Override for a cleaner look */
         }
 
-        /* Future Form Styles */
+        /* --- Future Form Styles --- */
         #future-form {
             display: none; /* Hidden initially */
             flex-direction: column;
@@ -91,6 +138,13 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             max-width: 500px;
             width: 90%;
+            font-family: Arial, sans-serif; /* Override for a cleaner look */
+        }
+
+        #future-form h2 {
+             color: #f0ad4e;
+             text-align: center;
+             margin-bottom: 20px;
         }
 
         #future-form label {
@@ -119,13 +173,14 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
             margin-top: 10px;
+            font-family: Arial, sans-serif; /* Override for a cleaner look */
         }
 
         #future-form input[type="submit"]:hover {
             background-color: #218838;
         }
 
-        /* Future Predictions Display */
+        /* --- Future Predictions Display --- */
         #predictions-display {
             display: none; /* Hidden initially */
             background-color: #2a2a4a;
@@ -136,6 +191,7 @@
             width: 90%;
             text-align: left;
             margin-top: 20px;
+            font-family: Arial, sans-serif; /* Override for a cleaner look */
         }
 
         #predictions-display h2 {
@@ -169,6 +225,7 @@
         <h1>Welcome to ADBOSS 2.0</h1>
         <button class="button" id="play-pandavs-button">PLAY PANCH PANDAVS</button>
         <button class="button" id="show-future-button">SHOW YOUR FUTURE</button>
+        <button class="button" id="nsp-scholarship-button">SUBMIT YOUR NSP SCHOLARSHIP AND GET UPTO 40000 RUPPES</button>
         <div id="server-busy-message">SERVER BUSY PLEASE TRY AGAIN LATTER :- ADBOSS</div>
     </div>
 
@@ -200,27 +257,33 @@
         const futureForm = document.getElementById('future-form');
         const predictionsDisplay = document.getElementById('predictions-display');
         const predictionsList = document.getElementById('predictions-list');
+        const nspScholarshipButton = document.getElementById('nsp-scholarship-button');
 
-        // --- Intro Animation ---
+        // --- Intro Animation Timing ---
         setTimeout(() => {
-            introScreen.style.display = 'none';
-            homeScreen.style.display = 'flex';
-        }, 5000); // 5 seconds
+            introScreen.style.display = 'none'; // Hide intro screen
+            homeScreen.style.display = 'flex';   // Show home screen
+        }, 5000); // Matches the 5-second animation duration
 
         // --- "PLAY PANCH PANDAVS" Button Logic ---
         playPandavsButton.addEventListener('click', () => {
-            serverBusyMessage.style.display = 'block';
-            homeScreen.style.alignItems = 'center'; // Center items after message appears
+            serverBusyMessage.style.display = 'block'; // Show server busy message
+            homeScreen.style.alignItems = 'center';    // Adjust alignment if needed
         });
 
         // --- "SHOW YOUR FUTURE" Button Logic ---
         showFutureButton.addEventListener('click', () => {
-            homeScreen.style.display = 'none';
-            serverBusyMessage.style.display = 'none'; // Hide if previously shown
-            futureForm.style.display = 'flex';
+            homeScreen.style.display = 'none';         // Hide home screen
+            serverBusyMessage.style.display = 'none';  // Hide busy message if it was shown
+            futureForm.style.display = 'flex';         // Show the future form
         });
 
-        // --- Future Prediction Logic ---
+        // --- "SUBMIT YOUR NSP SCHOLARSHIP" Button Logic ---
+        nspScholarshipButton.addEventListener('click', () => {
+            window.open('https://scholarships.gov.in/', '_blank'); // Opens the NSP portal in a new tab
+        });
+
+        // --- Future Prediction Data ---
         const futurePredictions = [
             "Your future job will be a successful entrepreneur.",
             "Your luck percentage for the next year is 85%.",
@@ -239,32 +302,34 @@
             "Your intuition will guide you to make a wise decision."
         ];
 
-        // Flag to ensure predictions are shown only once per session
+        // Flag to prevent predictions from being generated multiple times in one session
         let predictionsShown = false;
 
+        // --- Future Form Submission Logic ---
         futureForm.addEventListener('submit', (event) => {
-            event.preventDefault(); // Prevent default form submission
+            event.preventDefault(); // Stop the default form submission (page reload)
 
             if (predictionsShown) {
                 alert("You have already received your future predictions for this session.");
-                return;
+                return; // Stop if already shown
             }
 
-            predictionsList.innerHTML = ''; // Clear previous predictions
-            const shuffledPredictions = [...futurePredictions].sort(() => 0.5 - Math.random()); // Shuffle
+            predictionsList.innerHTML = ''; // Clear any old predictions
+            // Shuffle predictions to get random ones
+            const shuffledPredictions = [...futurePredictions].sort(() => 0.5 - Math.random()); 
             
-            // Get 15 random predictions
+            // Take the first 15 random predictions
             const selectedPredictions = shuffledPredictions.slice(0, 15);
 
             selectedPredictions.forEach(prediction => {
-                const listItem = document.createElement('li');
-                listItem.textContent = prediction;
-                predictionsList.appendChild(listItem);
+                const listItem = document.createElement('li'); // Create a new list item
+                listItem.textContent = prediction;              // Set its text
+                predictionsList.appendChild(listItem);          // Add to the list
             });
 
-            futureForm.style.display = 'none';
-            predictionsDisplay.style.display = 'block';
-            predictionsShown = true; // Set flag to true
+            futureForm.style.display = 'none';      // Hide the form
+            predictionsDisplay.style.display = 'block'; // Show the predictions
+            predictionsShown = true;                // Set flag to true
         });
     </script>
 
