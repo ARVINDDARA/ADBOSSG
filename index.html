@@ -1,495 +1,272 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ADBOSS Future Calculator 😎</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&family=Press+Start+2P&display=swap" rel="stylesheet">
-  <style>
-    /* Global Reset & Body Styles */
-    * {
-      box-sizing: border-box;
-      padding: 0;
-      margin: 0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADBOSS 2.0</title>
+    <style>
+        /* General Body Styles */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #1a1a2e; /* Dark background */
+            color: #e0e0e0; /* Light text */
+            overflow: hidden;
+        }
 
-    body {
-      font-family: 'Orbitron', sans-serif; /* Futuristic font */
-      background: linear-gradient(135deg, #2a003f, #001f3f, #0a0a2a); /* Darker, more futuristic gradient */
-      background-size: 400% 400%;
-      animation: gradientShift 25s ease infinite alternate; /* Even slower, super smooth background animation */
-      color: #e0e0e0; /* Lighter text for contrast */
-      text-align: center;
-      overflow-x: hidden;
-      transition: background 1s ease-in-out; /* Smooth transition */
-    }
+        /* Intro Screen Styles */
+        #intro-screen {
+            text-align: center;
+            font-size: 3em;
+            font-weight: bold;
+            color: #00bcd4; /* Cyan color */
+            animation: fadeInOut 5s forwards; /* 5-second animation */
+        }
 
-    /* Keyframe for background animation */
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 100% 50%; }
-    }
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: scale(0.8); }
+            20% { opacity: 1; transform: scale(1); }
+            80% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.2); display: none; }
+        }
 
-    /* Main Heading */
-    h1 {
-      font-size: 44px;
-      margin-top: 40px;
-      color: #00ffff; /* Cyberpunk blue */
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff; /* Stronger glow */
-      animation: pulsateGlow 3s infinite alternate; /* Smoother pulsation */
-    }
+        /* Home Screen Styles */
+        #home-screen {
+            display: none; /* Hidden initially */
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            background-color: #2a2a4a; /* Slightly lighter dark background */
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
 
-    @keyframes pulsateGlow {
-      from { text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; }
-      to { text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 40px #00ffff; }
-    }
+        #home-screen h1 {
+            color: #4CAF50; /* Green for heading */
+            margin-bottom: 20px;
+        }
 
-    /* Home Options Container */
-    .home-options {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px; /* Increased gap */
-      margin: 60px 20px; /* More margin */
-    }
+        .button {
+            background-color: #007bff; /* Blue button */
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 80%;
+            max-width: 300px;
+        }
 
-    /* Option Card Styling */
-    .option-card {
-      background: rgba(10, 25, 40, 0.9); /* Darker, semi-transparent */
-      border-radius: 20px; /* More rounded */
-      padding: 30px 25px; /* Increased padding */
-      width: 280px; /* Slightly wider */
-      font-size: 22px; /* Larger font */
-      font-weight: 600;
-      color: #aaffff; /* Lighter text for contrast */
-      box-shadow: 0 15px 30px rgba(0, 255, 255, 0.2), inset 0 0 15px rgba(0, 255, 255, 0.1); /* Inner and outer glow */
-      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smoother transitions */
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      transform-style: preserve-3d;
-      animation: floatCard 7s ease-in-out infinite; /* Slower, more subtle float */
-      border: 2px solid #00ffff; /* Border for subtle glow */
-    }
+        .button:hover {
+            background-color: #0056b3;
+        }
 
-    .option-card:hover {
-      transform: scale(1.08) rotateY(5deg); /* More pronounced 3D effect */
-      box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3), inset 0 0 20px rgba(0, 255, 255, 0.2);
-      background: rgba(15, 35, 55, 0.95); /* Slightly lighter on hover */
-    }
+        /* Server Busy Message */
+        #server-busy-message {
+            display: none;
+            color: #ffcc00; /* Yellow for warning */
+            margin-top: 20px;
+            font-size: 1.1em;
+            text-align: center;
+        }
 
-    @keyframes floatCard {
-      0%, 100% { transform: translateY(0px) rotateY(0deg); }
-      50% { transform: translateY(-10px) rotateY(2deg); } /* More subtle float */
-    }
+        /* Future Form Styles */
+        #future-form {
+            display: none; /* Hidden initially */
+            flex-direction: column;
+            gap: 15px;
+            background-color: #2a2a4a;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            max-width: 500px;
+            width: 90%;
+        }
 
-    /* Settings Button */
-    .settings-btn {
-      position: fixed;
-      top: 25px; /* Slightly more space from top */
-      right: 25px; /* Slightly more space from right */
-      background: #000000;
-      color: #00ffff;
-      border: 2px solid #00ffff; /* Border for glow */
-      border-radius: 50%;
-      width: 65px; /* Slightly larger */
-      height: 65px;
-      font-size: 30px; /* Larger icon */
-      cursor: pointer;
-      box-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff; /* Stronger glow */
-      transition: transform 0.5s ease-in-out;
-      z-index: 999;
-      animation: rotateGear 5s linear infinite, glowPulse 3s infinite alternate; /* Smoother animations */
-    }
+        #future-form label {
+            font-size: 1.1em;
+            color: #bbbbbb;
+        }
 
-    @keyframes rotateGear {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+        #future-form input[type="text"],
+        #future-form input[type="date"] {
+            padding: 10px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #3a3a5a;
+            color: #e0e0e0;
+            font-size: 1em;
+            width: calc(100% - 22px); /* Account for padding and border */
+        }
 
-    @keyframes glowPulse {
-      from { box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; }
-      to { box-shadow: 0 0 20px #00ffff, 0 0 35px #00ffff; }
-    }
+        #future-form input[type="submit"] {
+            background-color: #28a745; /* Green submit button */
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
 
-    /* Upgrade Flash Effect */
-    .upgraded-flash {
-      animation: glowFlash 1.5s ease-in-out;
-    }
+        #future-form input[type="submit"]:hover {
+            background-color: #218838;
+        }
 
-    @keyframes glowFlash {
-      0% { background-color: #ffffff; }
-      50% { background-color: #00ffcc; } /* Brighter, more distinct color */
-      100% { background-color: transparent; }
-    }
+        /* Future Predictions Display */
+        #predictions-display {
+            display: none; /* Hidden initially */
+            background-color: #2a2a4a;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            max-width: 500px;
+            width: 90%;
+            text-align: left;
+            margin-top: 20px;
+        }
 
-    /* Intro Screen */
-    #introScreen {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      font-size: 45px; /* Larger font */
-      color: #e0e0e0;
-      height: 100vh;
-      background: linear-gradient(45deg, #0a0a2a, #001f3f); /* Darker intro background */
-      /* No direct animation on introScreen, handled by JavaScript */
-    }
+        #predictions-display h2 {
+            color: #f0ad4e; /* Orange for heading */
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
-    #introScreen h1 {
-      font-size: 60px; /* Even larger */
-      animation: sparkle 2.5s infinite ease-in-out; /* Slower sparkle */
-      margin-bottom: 20px;
-    }
+        #predictions-list {
+            list-style-type: none;
+            padding: 0;
+        }
 
-    @keyframes sparkle {
-      0%, 100% { color: #ff00ff; text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff; } /* Pink glow */
-      50% { color: #00ffff; text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; } /* Blue glow */
-    }
-
-    /* Home Screen Transitions */
-    #homeScreen.hidden {
-      opacity: 0;
-      transform: scale(0.9); /* More subtle scale out */
-      transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bouncy transition */
-    }
-
-    #homeScreen {
-      opacity: 1;
-      transform: scale(1);
-      transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-    }
-
-    /* Ripple Effect on Click */
-    .option-card::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      background: rgba(0, 255, 255, 0.4); /* Brighter ripple */
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      opacity: 0;
-      pointer-events: none; /* Ensure clicks pass through */
-      transition: none; /* Important: remove transition from pseudo-element */
-    }
-
-    .option-card:active::before {
-      animation: ripple 0.6s linear forwards; /* Added forwards to keep last state */
-    }
-
-    @keyframes ripple {
-      0% { opacity: 1; transform: translate(-50%, -50%) scale(0); }
-      100% { opacity: 0; transform: translate(-50%, -50%) scale(2); }
-    }
-
-    .hidden { display: none !important; } /* Important for reliable hiding */
-    audio { display: none; }
-
-    /* ADBOSS ADVANCE SERVICE Text */
-    .advanced-service {
-      position: fixed;
-      bottom: 25px;
-      left: 25px;
-      font-family: 'Share Tech Mono', monospace; /* Techy font for this text */
-      font-size: 14px;
-      background: #000000e0; /* Darker, more opaque */
-      color: #00ffff;
-      padding: 8px 15px; /* Increased padding */
-      border-radius: 12px;
-      box-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff; /* Stronger glow */
-      cursor: pointer;
-      z-index: 998;
-      animation: glow 2.5s infinite alternate; /* Slower, smoother glow */
-      border: 1px solid #00ffff; /* Border for subtle definition */
-    }
-
-    @keyframes glow {
-      from { box-shadow: 0 0 8px #00ffff, 0 0 15px #00ffff; }
-      to { box-shadow: 0 0 25px #00ffff, 0 0 40px #00ffff; }
-    }
-
-    /* Panch Pandavs Coming Soon Page Styling */
-    #comingSoonScreen {
-      display: none; /* Hidden by default now */
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      position: fixed; /* Use fixed to cover entire viewport */
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #1a002f, #000a1f, #050515);
-      color: #00ffcc;
-      font-family: 'Press Start 2P', cursive; /* Best font for this! */
-      font-size: 2.5em;
-      text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
-      text-align: center;
-      z-index: 1000; /* Ensure it's on top */
-      animation: fadeIn 1s ease-out forwards;
-    }
-
-    #comingSoonScreen.show { /* New class to control visibility */
-      display: flex !important; /* Force display when 'show' class is present */
-    }
-
-    #comingSoonScreen h2 {
-      margin-bottom: 30px;
-      font-size: 1.2em;
-      letter-spacing: 2px;
-    }
-
-    #countdown {
-      font-size: 1.8em;
-      margin-top: 20px;
-      color: #ffcc00; /* Yellow for countdown */
-      text-shadow: 0 0 8px #ffcc00;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    /* Responsive Adjustments */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 32px;
-        margin-top: 25px;
-      }
-      .home-options {
-        margin: 30px 10px;
-        gap: 20px;
-      }
-      .option-card {
-        width: 200px;
-        padding: 20px 15px;
-        font-size: 18px;
-      }
-      .settings-btn {
-        width: 50px;
-        height: 50px;
-        font-size: 22px;
-        top: 15px;
-        right: 15px;
-      }
-      #introScreen h1 {
-        font-size: 40px;
-      }
-      #introScreen p {
-        font-size: 30px;
-      }
-      .advanced-service {
-        bottom: 15px;
-        left: 15px;
-        font-size: 12px;
-        padding: 6px 10px;
-      }
-      #comingSoonScreen {
-        font-size: 1.5em;
-      }
-      #comingSoonScreen h2 {
-        font-size: 0.8em;
-      }
-      #countdown {
-        font-size: 1em;
-      }
-    }
-  </style>
-
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TNBWGF5ZF0"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-TNBWGF5ZF0');
-  </script>
+        #predictions-list li {
+            background-color: #3a3a5a;
+            margin-bottom: 10px;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            color: #c0c0c0;
+        }
+    </style>
 </head>
 <body>
 
-  <audio id="introSound" src="https://assets.mixkit.co/sfx/preview/mixkit-epic-orchestra-transition-229.mp3"></audio>
-  <audio id="successSound" src="https://assets.mixkit.co/sfx/preview/mixkit-game-level-up-1938.mp3"></audio>
-
-  <div id="introScreen">
-    <h1>✨ Welcome to ADBOSS ✨</h1>
-    <p>Loading your future...</p>
-  </div>
-
-  <div id="homeScreen" class="hidden">
-    <h1>🌟 Welcome to ADBOSS 🌟</h1>
-    <div class="home-options" id="homeOptions">
-      <div class="option-card" onclick="window.open('https://arvinddara.github.io/FREEFIRE/', '_blank')">
-        🔥 Khelega Free Fire
-      </div>
-      <div class="option-card" onclick="window.open('https://arvinddara.github.io/FREEFIRE2/', '_blank')">
-        📋 View All Features
-      </div>
-      <div class="option-card" onclick="showComingSoon()">
-        ✨ TRY PANCH PANDAVS ✨
-      </div>
+    <div id="intro-screen">
+        ADBOSS 2.0<br>REALESED
     </div>
-  </div>
 
-  <button class="settings-btn" id="settings-btn" onclick="askCode()">⚙️</button>
+    <div id="home-screen">
+        <h1>Welcome to ADBOSS 2.0</h1>
+        <button class="button" id="play-pandavs-button">PLAY PANCH PANDAVS</button>
+        <button class="button" id="show-future-button">SHOW YOUR FUTURE</button>
+        <div id="server-busy-message">SERVER BUSY PLEASE TRY AGAIN LATTER :- ADBOSS</div>
+    </div>
 
-  <div class="advanced-service" id="advanceTap">
-    ADBOSS ADVANCE SERVICE
-  </div>
+    <form id="future-form">
+        <h2>Enter Your Details</h2>
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
 
-  <div id="comingSoonScreen" class="hidden">
-    <h2>GAME WILL BE COMING SOON</h2>
-    <div id="countdown"></div>
-  </div>
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" required>
 
-  <script>
-    // Initial load timeout and intro sequence
-    setTimeout(() => {
-      const introScreen = document.getElementById("introScreen");
-      const homeScreen = document.getElementById("homeScreen");
-      
-      // Animate intro screen out
-      introScreen.style.animation = 'introZoom 3.5s forwards'; // Ensure animation runs
+        <label for="city">City:</label>
+        <input type="text" id="city" required>
 
-      // Hide intro screen after animation
-      introScreen.addEventListener('animationend', () => {
-        introScreen.style.display = "none";
-        homeScreen.classList.remove("hidden"); // Show home screen
-        document.getElementById("introSound").play();
-      }, { once: true }); // Ensure event listener runs only once
-    }, 100); // Small delay to ensure CSS animation starts
+        <input type="submit" value="SUBMIT">
+    </form>
 
-    // Settings code access
-    function askCode() {
-      const code = prompt("🔐 Access Locked!\nCode pane ke liye jao:\nhttps://youtube.com/@ravi..bhai_0029?si=BzQiKXj1XXSWyZCf\n\nEnter the Code:");
-      if (code === "1722") {
-        upgradeHomeScreen();
-      } else {
-        alert("❌ Wrong code. Try again!");
-      }
-    }
+    <div id="predictions-display">
+        <h2>Your Future Predictions:</h2>
+        <ul id="predictions-list"></ul>
+    </div>
 
-    // Upgrade Home Screen Function
-    function upgradeHomeScreen() {
-      const homeOptions = document.getElementById("homeOptions");
-      const newCard = document.createElement("div");
-      newCard.className = "option-card";
-      newCard.innerText = "⚡ Click to Advance";
-      newCard.onclick = () => window.open('https://arvinddara.github.io/ADVANCE/', '_blank');
-      homeOptions.appendChild(newCard);
+    <script>
+        const introScreen = document.getElementById('intro-screen');
+        const homeScreen = document.getElementById('home-screen');
+        const playPandavsButton = document.getElementById('play-pandavs-button');
+        const serverBusyMessage = document.getElementById('server-busy-message');
+        const showFutureButton = document.getElementById('show-future-button');
+        const futureForm = document.getElementById('future-form');
+        const predictionsDisplay = document.getElementById('predictions-display');
+        const predictionsList = document.getElementById('predictions-list');
 
-      document.body.classList.add("upgraded-flash");
-      document.getElementById("successSound").play();
+        // --- Intro Animation ---
+        setTimeout(() => {
+            introScreen.style.display = 'none';
+            homeScreen.style.display = 'flex';
+        }, 5000); // 5 seconds
 
-      setTimeout(() => {
-        document.body.classList.remove("upgraded-flash");
-      }, 1500);
+        // --- "PLAY PANCH PANDAVS" Button Logic ---
+        playPandavsButton.addEventListener('click', () => {
+            serverBusyMessage.style.display = 'block';
+            homeScreen.style.alignItems = 'center'; // Center items after message appears
+        });
 
-      alert("✅ Upgrade Successful!");
-    }
+        // --- "SHOW YOUR FUTURE" Button Logic ---
+        showFutureButton.addEventListener('click', () => {
+            homeScreen.style.display = 'none';
+            serverBusyMessage.style.display = 'none'; // Hide if previously shown
+            futureForm.style.display = 'flex';
+        });
 
-    // Triple Tap Password Access for Advance with two-step password
-    let tapCount = 0;
-    const advanceTap = document.getElementById("advanceTap");
+        // --- Future Prediction Logic ---
+        const futurePredictions = [
+            "Your future job will be a successful entrepreneur.",
+            "Your luck percentage for the next year is 85%.",
+            "You will travel to 3 new countries in the coming years.",
+            "You will meet someone who will significantly impact your life.",
+            "A major financial opportunity awaits you in the next 6 months.",
+            "You will achieve a long-held personal goal within two years.",
+            "Your creativity will lead you to a new and exciting hobby.",
+            "You will find unexpected joy in a simple everyday activity.",
+            "A new skill you learn will open many doors for you.",
+            "You will overcome a past challenge and grow stronger.",
+            "Your health and well-being will improve significantly.",
+            "You will inspire others with your determination.",
+            "A forgotten dream will resurface and become a reality.",
+            "You will form a deep and lasting friendship.",
+            "Your intuition will guide you to make a wise decision."
+        ];
 
-    advanceTap.addEventListener("click", () => {
-      tapCount++;
-      if (tapCount >= 3) {
-        tapCount = 0;
+        // Flag to ensure predictions are shown only once per session
+        let predictionsShown = false;
 
-        // First password prompt
-        const pass1 = prompt("🔐 Enter Advance Password (1st step):");
-        if (pass1 === "18+") {
-          // Second password prompt
-          const pass2 = prompt("🔐 Enter Advance Password (2nd step):");
-          if (pass2 === "advancex") {
-            window.open("https://arvinddara.github.io/ADBOSSADVANCE/", "_blank");
-          } else {
-            alert("❌ Wrong second password!");
-          }
-        } else {
-          alert("❌ Wrong first password!");
-        }
-      }
-      setTimeout(() => { tapCount = 0 }, 3000); // Reset tap count after 3 seconds
-    });
+        futureForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent default form submission
 
-    // --- Panch Pandavs Coming Soon Logic ---
-    const COMING_SOON_KEY = 'panchPandavsComingSoonEndTime';
-    const REDIRECT_URL = 'https://arvinddara.github.io/PANCH/';
-    let countdownInterval; // To store the interval ID
+            if (predictionsShown) {
+                alert("You have already received your future predictions for this session.");
+                return;
+            }
 
-    function showComingSoon() {
-      // Hide other elements
-      document.getElementById("homeScreen").classList.add("hidden");
-      document.getElementById("settings-btn").classList.add("hidden"); /* Ensure it's hidden */
-      document.getElementById("advanceTap").classList.add("hidden"); /* Ensure it's hidden */
-
-      const comingSoonScreen = document.getElementById("comingSoonScreen");
-      comingSoonScreen.classList.remove("hidden"); // Remove 'hidden' class
-      comingSoonScreen.classList.add("show"); // Add 'show' class to apply flex display
-
-      let endTime = localStorage.getItem(COMING_SOON_KEY);
-      const now = new Date().getTime();
-
-      if (!endTime || now > parseInt(endTime)) {
-        // If no end time or past, set new 48-hour countdown from current time
-        endTime = now + (48 * 60 * 60 * 1000); // 48 hours in milliseconds
-        localStorage.setItem(COMING_SOON_KEY, endTime);
-      } else {
-        endTime = parseInt(endTime);
-      }
-
-      const countdownElement = document.getElementById("countdown");
-
-      // Clear any existing interval to prevent multiple timers
-      if (countdownInterval) {
-        clearInterval(countdownInterval);
-      }
-
-      countdownInterval = setInterval(() => {
-        const currentNow = new Date().getTime();
-        const distance = endTime - currentNow;
-
-        if (distance < 0) {
-          clearInterval(countdownInterval);
-          countdownElement.innerHTML = "Opening game now...";
-          localStorage.removeItem(COMING_SOON_KEY); // Clear stored time
-          window.location.href = REDIRECT_URL; // Redirect
-          return;
-        }
-
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        countdownElement.innerHTML = `${hours}H ${minutes}M ${seconds}S`;
-      }, 1000); // Update every second
-    }
-
-    // This ensures that if someone refreshes on the coming soon page, the timer resumes.
-    // Check if the coming soon screen should be active on page load
-    document.addEventListener('DOMContentLoaded', () => {
-        const endTime = localStorage.getItem(COMING_SOON_KEY);
-        if (endTime && new Date().getTime() < parseInt(endTime)) {
-            // If there's an active countdown, show the coming soon screen immediately
-            document.getElementById("introScreen").style.display = "none";
-            document.getElementById("homeScreen").classList.add("hidden");
-            document.getElementById("settings-btn").classList.add("hidden");
-            document.getElementById("advanceTap").classList.add("hidden");
+            predictionsList.innerHTML = ''; // Clear previous predictions
+            const shuffledPredictions = [...futurePredictions].sort(() => 0.5 - Math.random()); // Shuffle
             
-            const comingSoonScreen = document.getElementById("comingSoonScreen");
-            comingSoonScreen.classList.remove("hidden");
-            comingSoonScreen.classList.add("show");
-            showComingSoon(); // Re-initialize the countdown
-        }
-    });
+            // Get 15 random predictions
+            const selectedPredictions = shuffledPredictions.slice(0, 15);
 
-  </script>
+            selectedPredictions.forEach(prediction => {
+                const listItem = document.createElement('li');
+                listItem.textContent = prediction;
+                predictionsList.appendChild(listItem);
+            });
+
+            futureForm.style.display = 'none';
+            predictionsDisplay.style.display = 'block';
+            predictionsShown = true; // Set flag to true
+        });
+    </script>
 
 </body>
 </html>
