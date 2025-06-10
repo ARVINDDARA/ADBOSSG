@@ -215,6 +215,47 @@
             font-size: 1.1em;
             color: #c0c0c0;
         }
+
+        /* --- पॉपअप स्टाइल --- */
+        .popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #2a2a4a;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            text-align: center;
+            flex-direction: column;
+            gap: 20px;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .popup h2 {
+            color: #ffcc00;
+            margin-bottom: 15px;
+        }
+
+        .popup-button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .popup-button:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 <body>
@@ -227,6 +268,7 @@
         <h1>ADBOSS 2.0 में आपका स्वागत है</h1>
         <button class="button" id="play-pandavs-button">पांच पांडव खेलें</button>
         <button class="button" id="show-future-button">अपना भविष्य देखें</button>
+        <button class="button" id="prediction-game-button">ADBOSS PREDICTION GAME FREE EARNING 🤑</button>
         <button class="button" id="nsp-scholarship-button">अपनी एनएसपी छात्रवृत्ति जमा करें और 40000 रुपये तक प्राप्त करें</button>
         <div id="server-busy-message">सर्वर व्यस्त है कृपया बाद में प्रयास करें :- ADBOSS</div>
     </div>
@@ -250,6 +292,11 @@
         <ul id="predictions-list"></ul>
     </div>
 
+    <div id="earning-game-popup" class="popup">
+        <h2>EARNING GAME COMING SOON</h2>
+        <button class="popup-button" id="play-trail-button">PLAY TRAIL</button>
+    </div>
+
     <script>
         const introScreen = document.getElementById('intro-screen');
         const homeScreen = document.getElementById('home-screen');
@@ -260,6 +307,9 @@
         const predictionsDisplay = document.getElementById('predictions-display');
         const predictionsList = document.getElementById('predictions-list');
         const nspScholarshipButton = document.getElementById('nsp-scholarship-button');
+        const predictionGameButton = document.getElementById('prediction-game-button'); // New button
+        const earningGamePopup = document.getElementById('earning-game-popup');       // New popup
+        const playTrailButton = document.getElementById('play-trail-button');         // New button inside popup
 
         // --- इंट्रो एनिमेशन टाइमिंग ---
         setTimeout(() => {
@@ -278,12 +328,30 @@
             homeScreen.style.display = 'none';         // होम स्क्रीन छुपाएँ
             serverBusyMessage.style.display = 'none';  // यदि दिखाया गया हो तो व्यस्त संदेश छुपाएँ
             futureForm.style.display = 'flex';         // भविष्य का फॉर्म दिखाएँ
+            earningGamePopup.style.display = 'none';   // Hide popup if visible
         });
 
         // --- "अपनी एनएसपी छात्रवृत्ति जमा करें" बटन लॉजिक ---
         nspScholarshipButton.addEventListener('click', () => {
             window.open('https://scholarships.gov.in/', '_blank'); // एक नए टैब में एनएसपी पोर्टल खोलता है
         });
+
+        // --- "ADBOSS PREDICTION GAME FREE EARNING 🤑" बटन लॉजिक ---
+        predictionGameButton.addEventListener('click', () => {
+            earningGamePopup.style.display = 'flex';   // Show the earning game popup
+            homeScreen.style.display = 'none';         // Hide home screen
+            serverBusyMessage.style.display = 'none';  // Hide server busy message if visible
+            futureForm.style.display = 'none';         // Hide future form if visible
+            predictionsDisplay.style.display = 'none'; // Hide predictions if visible
+        });
+
+        // --- "PLAY TRAIL" बटन लॉजिक (inside the popup) ---
+        playTrailButton.addEventListener('click', () => {
+            window.open('https://arvinddara.github.io/ADVANCE/', '_blank'); // Open the game page in a new tab
+            earningGamePopup.style.display = 'none'; // Hide the popup after clicking
+            homeScreen.style.display = 'flex';       // Show home screen again
+        });
+
 
         // --- भविष्य की भविष्यवाणी डेटा ---
         const futurePredictions = [
@@ -297,7 +365,7 @@
             "आप एक साधारण रोजमर्रा की गतिविधि में अप्रत्याशित आनंद पाएंगे।",
             "आपके द्वारा सीखा गया एक नया कौशल आपके लिए कई दरवाजे खोलेगा।",
             "आप एक पिछली चुनौती पर काबू पाएंगे और मजबूत बनेंगे।",
-            "आपके स्वास्थ्य और कल्याण में काफी सुधार होगा।",
+            "आपकी स्वास्थ्य और कल्याण में काफी सुधार होगा।",
             "आप अपनी दृढ़ता से दूसरों को प्रेरित करेंगे।",
             "एक भूला हुआ सपना फिर से सामने आएगा और हकीकत बन जाएगा।",
             "आप एक गहरी और स्थायी दोस्ती करेंगे।",
@@ -320,7 +388,7 @@
             // यादृच्छिक भविष्यवाणियां प्राप्त करने के लिए भविष्यवाणियों को मिलाएं
             const shuffledPredictions = [...futurePredictions].sort(() => 0.5 - Math.random());
 
-            // पहली 5 यादृच्छिक भविष्यवाणियां लें (कम किया गया ताकि स्क्रॉलिंग की आवश्यकता न पड़े)
+            // पहली 5 यादृच्छिक भविष्यवाएं लें (कम किया गया ताकि स्क्रॉलिंग की आवश्यकता न पड़े)
             const selectedPredictions = shuffledPredictions.slice(0, 5);
 
             selectedPredictions.forEach(prediction => {
