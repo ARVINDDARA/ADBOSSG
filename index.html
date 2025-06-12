@@ -2,7 +2,7 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>ADBOSS 2.0</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
@@ -481,64 +481,5 @@
             "आपका भविष्य का काम एक सफल उद्यमी होगा।",
             "अगले वर्ष के लिए आपका भाग्य प्रतिशत 85% है।",
             "आप आने वाले वर्षों में 3 नए देशों की यात्रा करेंगे।",
-            "आप किसी ऐसे व्यक्ति से मिलेंगे जो आपके जीवन पर महत्वपूर्ण प्रभाव डालेगा।",
-            "अगले 6 महीनों में एक बड़ा वित्तीय अवसर आपका इंतजार कर रहा है।",
-            "आप दो साल के भीतर एक लंबे समय से चले आ रहे व्यक्तिगत लक्ष्य को प्राप्त करेंगे।",
-            "आपकी रचनात्मकता आपको एक नए और रोमांचक शौक की ओर ले जाएगी।",
-            "आप एक साधारण रोजमर्रा की गतिविधि में अप्रत्याशित आनंद पाएंगे।",
-            "आपके द्वारा सीखा गया एक नया कौशल आपके लिए कई दरवाजे खोलेगा।",
-            "आप एक पिछली चुनौती पर काबू पाएंगे और मजबूत बनेंगे।",
-            "आपकी स्वास्थ्य और कल्याण में काफी सुधार होगा।",
-            "आप अपनी दृढ़ता से दूसरों को प्रेरित करेंगे।",
-            "एक भूला हुआ सपना फिर से सामने आएगा और हकीकत बन जाएगा।",
-            "आप एक गहरी और स्थायी दोस्ती करेंगे।",
-            "आपकी अंतर्दृष्टि आपको एक बुद्धिमानीपूर्ण निर्णय लेने के लिए मार्गदर्शन करेगी।"
-        ];
-
-        // एक सत्र में कई बार भविष्यवाणियां उत्पन्न होने से रोकने के लिए फ़्लैग
-        let predictionsShown = false;
-
-        // --- भविष्य का फॉर्म जमा करने का लॉजिक ---
-        futureForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-
-            if (predictionsShown) {
-                alert("आपको इस सत्र के लिए अपनी भविष्यवाणियाँ पहले ही मिल चुकी हैं।");
-                return;
-            }
-
-            predictionsList.innerHTML = '';
-            const shuffledPredictions = [...futurePredictions].sort(() => 0.5 - Math.random());
-            const selectedPredictions = shuffledPredictions.slice(0, 5);
-
-            selectedPredictions.forEach(prediction => {
-                const listItem = document.createElement('li');
-                listItem.textContent = prediction;
-                predictionsList.appendChild(listItem);
-            });
-
-            futureForm.style.display = 'none';
-            predictionsDisplay.style.display = 'block';
-            predictionsShown = true;
-        });
-
-        // --- "अपना चेहरा अनुमान लगाएं" फॉर्म सबमिशन लॉजिक ---
-        guessFaceForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-
-            const faceName = document.getElementById('face-name').value;
-            const faceDob = document.getElementById('face-dob').value;
-            const faceCity = document.getElementById('face-city').value;
-
-            const randomIndex = Math.floor(Math.random() * faceImages.length);
-            const randomFaceUrl = faceImages[randomIndex];
-
-            predictedFaceImage.src = randomFaceUrl;
-            guessFaceForm.style.display = 'none';
-            facePredictionDisplay.style.display = 'flex'; // Changed to 'flex' as per CSS for display
-        });
-
-    </script>
-
-</body>
-</html>
+            "आप किसी ऐसे व्यक्ति से मिलेंगे
+        
