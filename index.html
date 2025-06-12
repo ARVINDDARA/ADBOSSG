@@ -127,7 +127,7 @@
             font-family: Arial, sans-serif; /* स्वच्छ दिखने के लिए ओवरराइड */
         }
 
-        /* --- भविष्य के फॉर्म स्टाइल --- */
+        /* --- भविष्य के फॉर्म स्टाइल (पुराना "अपना भविष्य देखें" के लिए) --- */
         #future-form {
             display: none; /* शुरू में छिपा हुआ */
             flex-direction: column;
@@ -180,7 +180,7 @@
             background-color: #218838;
         }
 
-        /* --- भविष्य की भविष्यवाणियाँ प्रदर्शन --- */
+        /* --- भविष्य की भविष्यवाणियाँ प्रदर्शन (पुराना "अपना भविष्य देखें" के लिए) --- */
         #predictions-display {
             display: none; /* शुरू में छिपा हुआ */
             background-color: #2a2a4a;
@@ -214,6 +214,86 @@
             border-radius: 5px;
             font-size: 1.1em;
             color: #c0c0c0;
+        }
+
+        /* --- "अपना चेहरा अनुमान लगाएं" फॉर्म स्टाइल --- */
+        #guess-face-form {
+            display: none; /* शुरू में छिपा हुआ */
+            flex-direction: column;
+            gap: 15px;
+            background-color: #2a2a4a;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            max-width: 500px;
+            width: 90%;
+            font-family: Arial, sans-serif;
+        }
+
+        #guess-face-form h2 {
+            color: #6a0dad; /* बैंगनी रंग */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #guess-face-form label {
+            font-size: 1.1em;
+            color: #bbbbbb;
+        }
+
+        #guess-face-form input[type="text"],
+        #guess-face-form input[type="date"] {
+            padding: 10px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #3a3a5a;
+            color: #e0e0e0;
+            font-size: 1em;
+            width: calc(100% - 22px);
+        }
+
+        #guess-face-form input[type="submit"] {
+            background-color: #dc3545; /* लाल सबमिट बटन */
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+            font-family: Arial, sans-serif;
+        }
+
+        #guess-face-form input[type="submit"]:hover {
+            background-color: #c82333;
+        }
+
+        /* --- चेहरा भविष्यवाणी प्रदर्शन --- */
+        #face-prediction-display {
+            display: none; /* शुरू में छिपा हुआ */
+            background-color: #2a2a4a;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            margin-top: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        #face-prediction-display h2 {
+            color: #6a0dad;
+            margin-bottom: 20px;
+        }
+
+        #predicted-face {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 15px;
+            box-shadow: 0 0 15px rgba(106, 13, 173, 0.7); /* बैंगनी चमक */
         }
 
         /* --- पॉपअप स्टाइल --- */
@@ -266,10 +346,10 @@
 
     <div id="home-screen">
         <h1>ADBOSS 2.0 में आपका स्वागत है</h1>
-        <button class="button" id="play-pandavs-button">पांच पांडव खेलें</button>
         <button class="button" id="show-future-button">अपना भविष्य देखें</button>
+        <button class="button" id="guess-face-button">अपना चेहरा अनुमान लगाएं</button>
+        <button class="button" id="luck-game-button">आपका भाग्य खेल भविष्यवाणी</button>
         <button class="button" id="prediction-game-button">ADBOSS PREDICTION GAME FREE EARNING 🤑</button>
-        <button class="button" id="nsp-scholarship-button">अपनी एनएसपी छात्रवृत्ति जमा करें और 40000 रुपये तक प्राप्त करें</button>
         <div id="server-busy-message">सर्वर व्यस्त है कृपया बाद में प्रयास करें :- ADBOSS</div>
     </div>
 
@@ -292,6 +372,25 @@
         <ul id="predictions-list"></ul>
     </div>
 
+    <form id="guess-face-form">
+        <h2>अपना चेहरा अनुमान लगाएं</h2>
+        <label for="face-name">नाम:</label>
+        <input type="text" id="face-name" required>
+
+        <label for="face-dob">जन्म तिथि:</label>
+        <input type="date" id="face-dob" required>
+
+        <label for="face-city">शहर:</label>
+        <input type="text" id="face-city" required>
+
+        <input type="submit" value="अनुमान लगाएं">
+    </form>
+
+    <div id="face-prediction-display">
+        <h2>आपका अनुमानित चेहरा:</h2>
+        <img id="predicted-face" src="" alt="अनुमानित चेहरा">
+    </div>
+
     <div id="earning-game-popup" class="popup">
         <h2>EARNING GAME COMING SOON</h2>
         <button class="popup-button" id="play-trail-button">PLAY TRAIL</button>
@@ -300,58 +399,82 @@
     <script>
         const introScreen = document.getElementById('intro-screen');
         const homeScreen = document.getElementById('home-screen');
-        const playPandavsButton = document.getElementById('play-pandavs-button');
         const serverBusyMessage = document.getElementById('server-busy-message');
         const showFutureButton = document.getElementById('show-future-button');
         const futureForm = document.getElementById('future-form');
         const predictionsDisplay = document.getElementById('predictions-display');
         const predictionsList = document.getElementById('predictions-list');
-        const nspScholarshipButton = document.getElementById('nsp-scholarship-button');
-        const predictionGameButton = document.getElementById('prediction-game-button'); // New button
-        const earningGamePopup = document.getElementById('earning-game-popup');       // New popup
-        const playTrailButton = document.getElementById('play-trail-button');         // New button inside popup
+        const predictionGameButton = document.getElementById('prediction-game-button');
+        const earningGamePopup = document.getElementById('earning-game-popup');
+        const playTrailButton = document.getElementById('play-trail-button');
 
-        // --- इंट्रो एनिमेशन टाइमिंग ---
+        // नए कंपोनेंट्स के लिए वेरिएबल्स
+        const guessFaceButton = document.getElementById('guess-face-button');
+        const luckGameButton = document.getElementById('luck-game-button');
+        const guessFaceForm = document.getElementById('guess-face-form');
+        const facePredictionDisplay = document.getElementById('face-prediction-display');
+        const predictedFaceImage = document.getElementById('predicted-face');
+
+        // रैंडम चेहरे की इमेज URL की सूची (आप इन्हें अपनी इमेज URL से बदल सकते हैं)
+        const faceImages = [
+            'https://i.ibb.co/L519V1N/girl-face.jpg', // उदाहरण URL 1
+            'https://i.ibb.co/VMyhG82/boy-face.jpg',   // उदाहरण URL 2
+            'https://i.ibb.co/x1b3XmS/person-1.jpg',   // उदाहरण URL 3
+            'https://i.ibb.co/Q8b7P5q/person-2.jpg',   // उदाहरण URL 4
+            'https://i.ibb.co/L5x9h6b/person-3.jpg',   // उदाहरण URL 5
+            'https://i.ibb.co/YyJ6L6K/person-4.jpg'    // उदाहरण URL 6
+        ];
+
+        // --- इंट्रो एनिमेशन टाइमिंग (बदला हुआ) ---
         setTimeout(() => {
             introScreen.style.display = 'none'; // इंट्रो स्क्रीन छुपाएँ
             homeScreen.style.display = 'flex';   // होम स्क्रीन दिखाएँ
-        }, 3000); // 3-सेकंड एनिमेशन अवधि से मेल खाता है
+        }, 3200); // 3.2 सेकंड - एनिमेशन को पूरा होने का थोड़ा अतिरिक्त समय दें
 
-        // --- "पांच पांडव खेलें" बटन लॉजिक ---
-        playPandavsButton.addEventListener('click', () => {
-            serverBusyMessage.style.display = 'block'; // सर्वर व्यस्त संदेश दिखाएँ
-            homeScreen.style.alignItems = 'center';    // यदि आवश्यक हो तो संरेखण समायोजित करें
-        });
+        // --- सभी नॉन-होम स्क्रीन एलिमेंट्स को छुपाने का फंक्शन ---
+        function hideAllNonHomeScreens() {
+            serverBusyMessage.style.display = 'none';
+            futureForm.style.display = 'none';
+            predictionsDisplay.style.display = 'none';
+            earningGamePopup.style.display = 'none';
+            guessFaceForm.style.display = 'none';
+            facePredictionDisplay.style.display = 'none';
+        }
 
         // --- "अपना भविष्य देखें" बटन लॉजिक ---
         showFutureButton.addEventListener('click', () => {
-            homeScreen.style.display = 'none';         // होम स्क्रीन छुपाएँ
-            serverBusyMessage.style.display = 'none';  // यदि दिखाया गया हो तो व्यस्त संदेश छुपाएँ
-            futureForm.style.display = 'flex';         // भविष्य का फॉर्म दिखाएँ
-            earningGamePopup.style.display = 'none';   // Hide popup if visible
-        });
-
-        // --- "अपनी एनएसपी छात्रवृत्ति जमा करें" बटन लॉजिक ---
-        nspScholarshipButton.addEventListener('click', () => {
-            window.open('https://scholarships.gov.in/', '_blank'); // एक नए टैब में एनएसपी पोर्टल खोलता है
+            homeScreen.style.display = 'none';
+            hideAllNonHomeScreens();
+            futureForm.style.display = 'flex';
         });
 
         // --- "ADBOSS PREDICTION GAME FREE EARNING 🤑" बटन लॉजिक ---
         predictionGameButton.addEventListener('click', () => {
-            earningGamePopup.style.display = 'flex';   // Show the earning game popup
-            homeScreen.style.display = 'none';         // Hide home screen
-            serverBusyMessage.style.display = 'none';  // Hide server busy message if visible
-            futureForm.style.display = 'none';         // Hide future form if visible
-            predictionsDisplay.style.display = 'none'; // Hide predictions if visible
+            homeScreen.style.display = 'none';
+            hideAllNonHomeScreens();
+            earningGamePopup.style.display = 'flex';
         });
 
-        // --- "PLAY TRAIL" बटन लॉजिक (inside the popup) ---
+        // --- "PLAY TRAIL" बटन लॉजिक (popup के अंदर) ---
         playTrailButton.addEventListener('click', () => {
-            window.open('https://arvinddara.github.io/ADVANCE/', '_blank'); // Open the game page in a new tab
-            earningGamePopup.style.display = 'none'; // Hide the popup after clicking
-            homeScreen.style.display = 'flex';       // Show home screen again
+            window.open('https://arvinddara.github.io/ADVANCE/', '_blank');
+            earningGamePopup.style.display = 'none';
+            homeScreen.style.display = 'flex';
         });
 
+        // --- "अपना चेहरा अनुमान लगाएं" बटन लॉजिक ---
+        guessFaceButton.addEventListener('click', () => {
+            homeScreen.style.display = 'none';
+            hideAllNonHomeScreens();
+            guessFaceForm.style.display = 'flex';
+        });
+
+        // --- "आपका भाग्य खेल भविष्यवाणी" बटन लॉजिक ---
+        luckGameButton.addEventListener('click', () => {
+            window.open('https://arvinddara.github.io/Ai/', '_blank');
+            homeScreen.style.display = 'flex';
+            hideAllNonHomeScreens();
+        });
 
         // --- भविष्य की भविष्यवाणी डेटा ---
         const futurePredictions = [
@@ -377,32 +500,45 @@
 
         // --- भविष्य का फॉर्म जमा करने का लॉजिक ---
         futureForm.addEventListener('submit', (event) => {
-            event.preventDefault(); // डिफ़ॉल्ट फॉर्म सबमिशन (पेज रीलोड) रोकें
+            event.preventDefault();
 
             if (predictionsShown) {
                 alert("आपको इस सत्र के लिए अपनी भविष्यवाणियाँ पहले ही मिल चुकी हैं।");
-                return; // यदि पहले ही दिखाया जा चुका है तो रोकें
+                return;
             }
 
-            predictionsList.innerHTML = ''; // किसी भी पुरानी भविष्यवाणी को साफ़ करें
-            // यादृच्छिक भविष्यवाणियां प्राप्त करने के लिए भविष्यवाणियों को मिलाएं
+            predictionsList.innerHTML = '';
             const shuffledPredictions = [...futurePredictions].sort(() => 0.5 - Math.random());
-
-            // पहली 5 यादृच्छिक भविष्यवाएं लें (कम किया गया ताकि स्क्रॉलिंग की आवश्यकता न पड़े)
             const selectedPredictions = shuffledPredictions.slice(0, 5);
 
             selectedPredictions.forEach(prediction => {
-                const listItem = document.createElement('li'); // एक नई सूची आइटम बनाएँ
-                listItem.textContent = prediction;              // इसका टेक्स्ट सेट करें
-                predictionsList.appendChild(listItem);          // सूची में जोड़ें
+                const listItem = document.createElement('li');
+                listItem.textContent = prediction;
+                predictionsList.appendChild(listItem);
             });
 
-            futureForm.style.display = 'none';      // फॉर्म छुपाएँ
-            predictionsDisplay.style.display = 'block'; // भविष्यवाणियाँ दिखाएँ
-            predictionsShown = true;                // फ़्लैग को सत्य पर सेट करें
+            futureForm.style.display = 'none';
+            predictionsDisplay.style.display = 'block';
+            predictionsShown = true;
         });
+
+        // --- "अपना चेहरा अनुमान लगाएं" फॉर्म सबमिशन लॉजिक ---
+        guessFaceForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const faceName = document.getElementById('face-name').value;
+            const faceDob = document.getElementById('face-dob').value;
+            const faceCity = document.getElementById('face-city').value;
+
+            const randomIndex = Math.floor(Math.random() * faceImages.length);
+            const randomFaceUrl = faceImages[randomIndex];
+
+            predictedFaceImage.src = randomFaceUrl;
+            guessFaceForm.style.display = 'none';
+            facePredictionDisplay.style.display = 'flex'; // Changed to 'flex' as per CSS for display
+        });
+
     </script>
 
 </body>
-  </html>
-  
+</html>
