@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>ADBOSS 2.0</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1493967192695375"
+         crossorigin="anonymous"></script>
     <style>
         /* --- सामान्य बॉडी स्टाइल --- */
         body {
@@ -336,6 +338,16 @@
         .popup-button:hover {
             background-color: #218838;
         }
+        /* AdSense कंटेनर के लिए स्टाइलिंग */
+        .ad-container {
+            margin-top: 30px; /* ऊपर से थोड़ी जगह */
+            margin-bottom: 30px; /* नीचे से थोड़ी जगह */
+            text-align: center; /* विज्ञापन को सेंटर करने के लिए */
+            /* अगर विज्ञापन नहीं दिख रहा है, तो बैकग्राउंड जोड़कर देखें कि कंटेनर दिख रहा है या नहीं */
+            /* background-color: #333; */
+            /* padding: 10px; */
+            /* border-radius: 5px; */
+        }
     </style>
 </head>
 <body>
@@ -351,6 +363,16 @@
         <button class="button" id="luck-game-button">आपका भाग्य खेल भविष्यवाणी</button>
         <button class="button" id="prediction-game-button">ADBOSS PREDICTION GAME FREE EARNING 🤑</button>
         <div id="server-busy-message">सर्वर व्यस्त है कृपया बाद में प्रयास करें :- ADBOSS</div>
+
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:360px;height:800px"
+                 data-ad-client="ca-pub-1493967192695375"
+                 data-ad-slot="4414929678"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
     </div>
 
     <form id="future-form">
@@ -365,6 +387,16 @@
         <input type="text" id="city" required>
 
         <input type="submit" value="जमा करें">
+
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:360px;height:800px"
+                 data-ad-client="ca-pub-1493967192695375"
+                 data-ad-slot="4414929678"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
     </form>
 
     <div id="predictions-display">
@@ -384,6 +416,16 @@
         <input type="text" id="face-city" required>
 
         <input type="submit" value="अनुमान लगाएं">
+
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:360px;height:800px"
+                 data-ad-client="ca-pub-1493967192695375"
+                 data-ad-slot="4414929678"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
     </form>
 
     <div id="face-prediction-display">
@@ -425,9 +467,6 @@
             'https://i.ibb.co/YyJ6L6K/person-4.jpg'    // उदाहरण URL 6
         ];
 
-        // Ad URL
-        const adUrl = 'https://www.profitableratecpm.com/gapisxdta?key=f7c2d9614f0a0b1f06ea4ad2ea184b06';
-
         // --- इंट्रो एनिमेशन टाइमिंग (बदला हुआ) ---
         setTimeout(() => {
             introScreen.style.display = 'none'; // इंट्रो स्क्रीन छुपाएँ
@@ -444,63 +483,39 @@
             facePredictionDisplay.style.display = 'none';
         }
 
-        // --- Ad display function ---
-        function showAdAndProceed(callback) {
-            const adWindow = window.open(adUrl, '_blank', 'width=800,height=600');
-            setTimeout(() => {
-                if (adWindow) {
-                    adWindow.close();
-                }
-                callback(); // Execute the original button's function
-            }, 5000); // 5 seconds
-        }
-
         // --- "अपना भविष्य देखें" बटन लॉजिक ---
         showFutureButton.addEventListener('click', () => {
-            showAdAndProceed(() => {
-                homeScreen.style.display = 'none';
-                hideAllNonHomeScreens();
-                futureForm.style.display = 'flex';
-            });
+            hideAllNonHomeScreens();
+            homeScreen.style.display = 'none'; // होम स्क्रीन छुपाएँ
+            futureForm.style.display = 'flex'; // भविष्य फॉर्म दिखाएँ
         });
 
         // --- "ADBOSS PREDICTION GAME FREE EARNING 🤑" बटन लॉजिक ---
         predictionGameButton.addEventListener('click', () => {
-            showAdAndProceed(() => {
-                homeScreen.style.display = 'none';
-                hideAllNonHomeScreens();
-                earningGamePopup.style.display = 'flex';
-            });
+            hideAllNonHomeScreens();
+            homeScreen.style.display = 'none'; // होम स्क्रीन छुपाएँ
+            earningGamePopup.style.display = 'flex'; // पॉपअप दिखाएँ
         });
 
         // --- "PLAY TRAIL" बटन लॉजिक (popup के अंदर) ---
         playTrailButton.addEventListener('click', () => {
-            // Note: This button is inside a popup. The ad logic should be handled by the parent button that opens this popup.
-            // However, if you want an ad even on this "Play Trail" click, it will also show the ad.
-            showAdAndProceed(() => {
-                window.open('https://arvinddara.github.io/ADVANCE/', '_blank');
-                earningGamePopup.style.display = 'none';
-                homeScreen.style.display = 'flex';
-            });
+            window.open('https://arvinddara.github.io/ADVANCE/', '_blank');
+            earningGamePopup.style.display = 'none';
+            homeScreen.style.display = 'flex';
         });
-
 
         // --- "अपना चेहरा अनुमान लगाएं" बटन लॉजिक ---
         guessFaceButton.addEventListener('click', () => {
-            showAdAndProceed(() => {
-                homeScreen.style.display = 'none';
-                hideAllNonHomeScreens();
-                guessFaceForm.style.display = 'flex';
-            });
+            hideAllNonHomeScreens();
+            homeScreen.style.display = 'none'; // होम स्क्रीन छुपाएँ
+            guessFaceForm.style.display = 'flex'; // चेहरा अनुमान फॉर्म दिखाएँ
         });
 
         // --- "आपका भाग्य खेल भविष्यवाणी" बटन लॉजिक ---
         luckGameButton.addEventListener('click', () => {
-            showAdAndProceed(() => {
-                window.open('https://arvinddara.github.io/Ai/', '_blank');
-                homeScreen.style.display = 'flex';
-                hideAllNonHomeScreens();
-            });
+            window.open('https://arvinddara.github.io/Ai/', '_blank');
+            homeScreen.style.display = 'flex';
+            hideAllNonHomeScreens();
         });
 
         // --- भविष्य की भविष्यवाणी डेटा ---
@@ -510,6 +525,26 @@
             "आप आने वाले वर्षों में 3 नए देशों की यात्रा करेंगे।",
             "आप किसी ऐसे व्यक्ति से मिलेंगे"
         ];
-    </script>
-</body>
-</html>
+
+        // भविष्य फॉर्म सबमिशन लॉजिक
+        futureForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // फॉर्म सबमिशन को रोकें
+
+            const name = document.getElementById('name').value;
+            const dob = document.getElementById('dob').value;
+            const city = document.getElementById('city').value;
+
+            // भविष्यवाणियों को दिखाने के लिए
+            predictionsList.innerHTML = ''; // पिछली भविष्यवाणियों को साफ़ करें
+            futurePredictions.forEach(prediction => {
+                const li = document.createElement('li');
+                li.textContent = prediction.replace('मिलेंगे', name + ' से मिलेंगे'); // नाम जोड़ने का उदाहरण
+                predictionsList.appendChild(li);
+            });
+
+            futureForm.style.display = 'none';
+            predictionsDisplay.style.display = 'block'; // भविष्यवाणियां दिखाएं
+        });
+
+        // चेहरा अनुमान फॉर्म सबमिशन लॉजिक
+        guessFaceForm.addEventListen
