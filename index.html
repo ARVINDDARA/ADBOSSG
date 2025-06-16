@@ -350,7 +350,6 @@
         <button class="button" id="guess-face-button">अपना चेहरा अनुमान लगाएं</button>
         <button class="button" id="luck-game-button">आपका भाग्य खेल भविष्यवाणी</button>
         <button class="button" id="prediction-game-button">ADBOSS PREDICTION GAME FREE EARNING 🤑</button>
-        <a href="https://www.profitableratecpm.com/gapisxdta?key=f7c2d9614f0a0b1f06ea4ad2ea184b06" target="_blank" class="button" style="text-decoration: none; display: flex; justify-content: center; align-items: center;">विज्ञापन देखें</a>
         <div id="server-busy-message">सर्वर व्यस्त है कृपया बाद में प्रयास करें :- ADBOSS</div>
     </div>
 
@@ -426,6 +425,9 @@
             'https://i.ibb.co/YyJ6L6K/person-4.jpg'    // उदाहरण URL 6
         ];
 
+        // Ad URL
+        const adUrl = 'https://www.profitableratecpm.com/gapisxdta?key=f7c2d9614f0a0b1f06ea4ad2ea184b06';
+
         // --- इंट्रो एनिमेशन टाइमिंग (बदला हुआ) ---
         setTimeout(() => {
             introScreen.style.display = 'none'; // इंट्रो स्क्रीन छुपाएँ
@@ -442,39 +444,63 @@
             facePredictionDisplay.style.display = 'none';
         }
 
+        // --- Ad display function ---
+        function showAdAndProceed(callback) {
+            const adWindow = window.open(adUrl, '_blank', 'width=800,height=600');
+            setTimeout(() => {
+                if (adWindow) {
+                    adWindow.close();
+                }
+                callback(); // Execute the original button's function
+            }, 5000); // 5 seconds
+        }
+
         // --- "अपना भविष्य देखें" बटन लॉजिक ---
         showFutureButton.addEventListener('click', () => {
-            homeScreen.style.display = 'none';
-            hideAllNonHomeScreens();
-            futureForm.style.display = 'flex';
+            showAdAndProceed(() => {
+                homeScreen.style.display = 'none';
+                hideAllNonHomeScreens();
+                futureForm.style.display = 'flex';
+            });
         });
 
         // --- "ADBOSS PREDICTION GAME FREE EARNING 🤑" बटन लॉजिक ---
         predictionGameButton.addEventListener('click', () => {
-            homeScreen.style.display = 'none';
-            hideAllNonHomeScreens();
-            earningGamePopup.style.display = 'flex';
+            showAdAndProceed(() => {
+                homeScreen.style.display = 'none';
+                hideAllNonHomeScreens();
+                earningGamePopup.style.display = 'flex';
+            });
         });
 
         // --- "PLAY TRAIL" बटन लॉजिक (popup के अंदर) ---
         playTrailButton.addEventListener('click', () => {
-            window.open('https://arvinddara.github.io/ADVANCE/', '_blank');
-            earningGamePopup.style.display = 'none';
-            homeScreen.style.display = 'flex';
+            // Note: This button is inside a popup. The ad logic should be handled by the parent button that opens this popup.
+            // However, if you want an ad even on this "Play Trail" click, it will also show the ad.
+            showAdAndProceed(() => {
+                window.open('https://arvinddara.github.io/ADVANCE/', '_blank');
+                earningGamePopup.style.display = 'none';
+                homeScreen.style.display = 'flex';
+            });
         });
+
 
         // --- "अपना चेहरा अनुमान लगाएं" बटन लॉजिक ---
         guessFaceButton.addEventListener('click', () => {
-            homeScreen.style.display = 'none';
-            hideAllNonHomeScreens();
-            guessFaceForm.style.display = 'flex';
+            showAdAndProceed(() => {
+                homeScreen.style.display = 'none';
+                hideAllNonHomeScreens();
+                guessFaceForm.style.display = 'flex';
+            });
         });
 
         // --- "आपका भाग्य खेल भविष्यवाणी" बटन लॉजिक ---
         luckGameButton.addEventListener('click', () => {
-            window.open('https://arvinddara.github.io/Ai/', '_blank');
-            homeScreen.style.display = 'flex';
-            hideAllNonHomeScreens();
+            showAdAndProceed(() => {
+                window.open('https://arvinddara.github.io/Ai/', '_blank');
+                homeScreen.style.display = 'flex';
+                hideAllNonHomeScreens();
+            });
         });
 
         // --- भविष्य की भविष्यवाणी डेटा ---
@@ -483,7 +509,6 @@
             "अगले वर्ष के लिए आपका भाग्य प्रतिशत 85% है।",
             "आप आने वाले वर्षों में 3 नए देशों की यात्रा करेंगे।",
             "आप किसी ऐसे व्यक्ति से मिलेंगे"
-            // The incomplete sentence "आप किसी ऐसे व्यक्ति से मिलेंगे" was left as is, as it's part of the original content.
         ];
     </script>
 </body>
