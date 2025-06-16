@@ -18,7 +18,7 @@
             margin: 0;
             background-color: #1a1a2e; /* गहरा पृष्ठभूमि */
             color: #e0e0e0; /* हल्का टेक्स्ट */
-            overflow: hidden; /* एनिमेशन के कारण स्क्रॉलबार को रोकें */
+            /* overflow: hidden; /* एनिमेशन के कारण स्क्रॉलबार को रोकें - अब हटाया गया */
         }
 
         /* --- इंट्रो स्क्रीन स्टाइल --- */
@@ -343,10 +343,7 @@
             margin-top: 30px; /* ऊपर से थोड़ी जगह */
             margin-bottom: 30px; /* नीचे से थोड़ी जगह */
             text-align: center; /* विज्ञापन को सेंटर करने के लिए */
-            /* अगर विज्ञापन नहीं दिख रहा है, तो बैकग्राउंड जोड़कर देखें कि कंटेनर दिख रहा है या नहीं */
-            /* background-color: #333; */
-            /* padding: 10px; */
-            /* border-radius: 5px; */
+            display: block; /* यह सुनिश्चित करने के लिए कि यह सही से जगह ले */
         }
     </style>
 </head>
@@ -471,80 +468,5 @@
         setTimeout(() => {
             introScreen.style.display = 'none'; // इंट्रो स्क्रीन छुपाएँ
             homeScreen.style.display = 'flex';   // होम स्क्रीन दिखाएँ
-        }, 3200); // 3.2 सेकंड - एनिमेशन को पूरा होने का थोड़ा अतिरिक्त समय दें
-
-        // --- सभी नॉन-होम स्क्रीन एलिमेंट्स को छुपाने का फंक्शन ---
-        function hideAllNonHomeScreens() {
-            serverBusyMessage.style.display = 'none';
-            futureForm.style.display = 'none';
-            predictionsDisplay.style.display = 'none';
-            earningGamePopup.style.display = 'none';
-            guessFaceForm.style.display = 'none';
-            facePredictionDisplay.style.display = 'none';
-        }
-
-        // --- "अपना भविष्य देखें" बटन लॉजिक ---
-        showFutureButton.addEventListener('click', () => {
-            hideAllNonHomeScreens();
-            homeScreen.style.display = 'none'; // होम स्क्रीन छुपाएँ
-            futureForm.style.display = 'flex'; // भविष्य फॉर्म दिखाएँ
-        });
-
-        // --- "ADBOSS PREDICTION GAME FREE EARNING 🤑" बटन लॉजिक ---
-        predictionGameButton.addEventListener('click', () => {
-            hideAllNonHomeScreens();
-            homeScreen.style.display = 'none'; // होम स्क्रीन छुपाएँ
-            earningGamePopup.style.display = 'flex'; // पॉपअप दिखाएँ
-        });
-
-        // --- "PLAY TRAIL" बटन लॉजिक (popup के अंदर) ---
-        playTrailButton.addEventListener('click', () => {
-            window.open('https://arvinddara.github.io/ADVANCE/', '_blank');
-            earningGamePopup.style.display = 'none';
-            homeScreen.style.display = 'flex';
-        });
-
-        // --- "अपना चेहरा अनुमान लगाएं" बटन लॉजिक ---
-        guessFaceButton.addEventListener('click', () => {
-            hideAllNonHomeScreens();
-            homeScreen.style.display = 'none'; // होम स्क्रीन छुपाएँ
-            guessFaceForm.style.display = 'flex'; // चेहरा अनुमान फॉर्म दिखाएँ
-        });
-
-        // --- "आपका भाग्य खेल भविष्यवाणी" बटन लॉजिक ---
-        luckGameButton.addEventListener('click', () => {
-            window.open('https://arvinddara.github.io/Ai/', '_blank');
-            homeScreen.style.display = 'flex';
-            hideAllNonHomeScreens();
-        });
-
-        // --- भविष्य की भविष्यवाणी डेटा ---
-        const futurePredictions = [
-            "आपका भविष्य का काम एक सफल उद्यमी होगा।",
-            "अगले वर्ष के लिए आपका भाग्य प्रतिशत 85% है।",
-            "आप आने वाले वर्षों में 3 नए देशों की यात्रा करेंगे।",
-            "आप किसी ऐसे व्यक्ति से मिलेंगे"
-        ];
-
-        // भविष्य फॉर्म सबमिशन लॉजिक
-        futureForm.addEventListener('submit', (event) => {
-            event.preventDefault(); // फॉर्म सबमिशन को रोकें
-
-            const name = document.getElementById('name').value;
-            const dob = document.getElementById('dob').value;
-            const city = document.getElementById('city').value;
-
-            // भविष्यवाणियों को दिखाने के लिए
-            predictionsList.innerHTML = ''; // पिछली भविष्यवाणियों को साफ़ करें
-            futurePredictions.forEach(prediction => {
-                const li = document.createElement('li');
-                li.textContent = prediction.replace('मिलेंगे', name + ' से मिलेंगे'); // नाम जोड़ने का उदाहरण
-                predictionsList.appendChild(li);
-            });
-
-            futureForm.style.display = 'none';
-            predictionsDisplay.style.display = 'block'; // भविष्यवाणियां दिखाएं
-        });
-
-        // चेहरा अनुमान फॉर्म सबमिशन लॉजिक
-        guessFaceForm.addEventListen
+        }, 320
+        
