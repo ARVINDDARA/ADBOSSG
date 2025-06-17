@@ -5,104 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>ADBOSS 2.0</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1493967192695375"
-         crossorigin="anonymous"></script>
     <style>
-        /* --- सामान्य बॉडी स्टाइल --- */
+        /* आपकी मौजूदा CSS */
         body {
-            font-family: 'Press Start 2P', cursive; /* सुसंगत थीम के लिए रेट्रो फ़ॉन्ट लागू */
+            font-family: 'Press Start 2P', cursive;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            background-color: #1a1a2e; /* गहरा पृष्ठभूमि */
-            color: #e0e0e0; /* हल्का टेक्स्ट */
-            /* overflow: hidden; /* एनिमेशन के कारण स्क्रॉलबार को रोकें - अब हटाया गया */
+            background-color: #1a1a2e;
+            color: #e0e0e0;
+            overflow-x: hidden;
+            box-sizing: border-box;
+            padding: 20px;
         }
 
-        /* --- इंट्रो स्क्रीन स्टाइल --- */
         #intro-screen {
             text-align: center;
-            font-size: 3.5em; /* प्रभाव के लिए बड़ा */
+            font-size: 3.5em;
             font-weight: bold;
-            color: #00bcd4; /* सियान रंग */
-            animation: glitchReveal 3s forwards; /* 'dhasu' एनिमेशन को छोटा किया गया */
-            text-shadow: 0 0 10px rgba(0, 189, 212, 0.7), 0 0 20px rgba(0, 189, 212, 0.5); /* चमकता प्रभाव */
-            letter-spacing: 5px; /* डिजिटल अनुभव के लिए स्पेसिंग */
-            position: relative; /* गड़बड़ी प्रभावों के लिए आधार */
+            color: #00bcd4;
+            animation: glitchReveal 3s forwards;
+            text-shadow: 0 0 10px rgba(0, 189, 212, 0.7), 0 0 20px rgba(0, 189, 212, 0.5);
+            letter-spacing: 5px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 600px;
         }
 
-        /* 'Dhasu' इंट्रो एनिमेशन के लिए कीफ़्रेम */
         @keyframes glitchReveal {
-            0% {
-                opacity: 0;
-                transform: scale(0.8) translateY(-20px);
-                filter: blur(10px); /* धुंधला शुरू होता है */
-                text-shadow: none;
-                letter-spacing: -20px; /* अक्षर सिकुड़े हुए शुरू होते हैं */
-            }
-            10% {
-                opacity: 0.2;
-                transform: scale(0.9) translateY(0px);
-                filter: blur(5px);
-                text-shadow: none;
-                letter-spacing: -10px;
-            }
-            20% {
-                opacity: 0.5;
-                transform: scale(1) translateY(0px);
-                filter: blur(0px); /* स्पष्ट हो जाता है */
-                text-shadow: 0 0 5px rgba(0, 189, 212, 0.4);
-                letter-spacing: 0px; /* अक्षर फैलते हैं */
-            }
-            22% { /* संक्षिप्त झिलमिलाहट भाग 1 */
-                opacity: 0.8;
-                transform: scale(1.01);
-            }
-            24% { /* संक्षिप्त झिलमिलाहट भाग 2 */
-                opacity: 0.5;
-                transform: scale(0.99);
-            }
-            26% {
-                opacity: 1; /* पूरी तरह से दिखाई देता है और स्थिर होता है */
-                transform: scale(1);
-            }
-            80% {
-                opacity: 1; /* एक अवधि के लिए दिखाई देता रहता है */
-                transform: scale(1);
-            }
-            100% {
-                opacity: 0; /* फीका पड़ जाता है */
-                transform: scale(1.2);
-                display: none; /* तत्व को पूरी तरह से छुपाता है */
-            }
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8) translateY(-20px); filter: blur(10px); text-shadow: none; letter-spacing: -20px; }
+            10% { opacity: 0.2; transform: translate(-50%, -50%) scale(0.9) translateY(0px); filter: blur(5px); text-shadow: none; letter-spacing: -10px; }
+            20% { opacity: 0.5; transform: translate(-50%, -50%) scale(1) translateY(0px); filter: blur(0px); text-shadow: 0 0 5px rgba(0, 189, 212, 0.4); letter-spacing: 0px; }
+            22% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.01); }
+            24% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.99); }
+            26% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(1.2); display: none; }
         }
 
-        /* --- होम स्क्रीन स्टाइल --- */
-        #home-screen {
-            display: none; /* शुरू में छिपा हुआ, इंट्रो के बाद दिखाया गया */
+        #new-home-screen {
+            display: none;
             flex-direction: column;
             align-items: center;
-            gap: 20px; /* बटनों के बीच जगह */
-            background-color: #2a2a4a; /* थोड़ा हल्का गहरा पृष्ठभूमि */
+            gap: 20px;
+            background-color: #2a2a4a;
             padding: 40px;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             max-width: 500px;
             width: 90%;
             text-align: center;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 90vh;
         }
 
-        #home-screen h1 {
-            color: #4CAF50; /* हेडिंग के लिए हरा */
+        #new-home-screen h1 {
+            color: #4CAF50;
             margin-bottom: 20px;
-            font-size: 1.8em; /* इस स्क्रीन के लिए समायोजित */
-            font-family: Arial, sans-serif; /* स्वच्छ दिखने के लिए ओवरराइड */
+            font-size: 1.8em;
+            font-family: Arial, sans-serif;
         }
 
         .button {
-            background-color: #007bff; /* नीला बटन */
+            background-color: #007bff;
             color: white;
             padding: 15px 30px;
             border: none;
@@ -112,115 +83,19 @@
             transition: background-color 0.3s ease;
             width: 80%;
             max-width: 300px;
-            font-family: Arial, sans-serif; /* स्वच्छ दिखने के लिए ओवरराइड */
+            font-family: Arial, sans-serif;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .button:hover {
             background-color: #0056b3;
         }
 
-        /* --- सर्वर व्यस्त संदेश --- */
-        #server-busy-message {
-            display: none; /* शुरू में छिपा हुआ */
-            color: #ffcc00; /* चेतावनी के लिए पीला */
-            margin-top: 20px;
-            font-size: 1.1em;
-            text-align: center;
-            font-family: Arial, sans-serif; /* स्वच्छ दिखने के लिए ओवरराइड */
-        }
-
-        /* --- भविष्य के फॉर्म स्टाइल (पुराना "अपना भविष्य देखें" के लिए) --- */
-        #future-form {
-            display: none; /* शुरू में छिपा हुआ */
-            flex-direction: column;
-            gap: 15px;
-            background-color: #2a2a4a;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            max-width: 500px;
-            width: 90%;
-            font-family: Arial, sans-serif; /* स्वच्छ दिखने के लिए ओवरराइड */
-        }
-
-        #future-form h2 {
-             color: #f0ad4e;
-             text-align: center;
-             margin-bottom: 20px;
-        }
-
-        #future-form label {
-            font-size: 1.1em;
-            color: #bbbbbb;
-        }
-
-        #future-form input[type="text"],
-        #future-form input[type="date"] {
-            padding: 10px;
-            border: 1px solid #555;
-            border-radius: 5px;
-            background-color: #3a3a5a;
-            color: #e0e0e0;
-            font-size: 1em;
-            width: calc(100% - 22px); /* पैडिंग और बॉर्डर के लिए */
-        }
-
-        #future-form input[type="submit"] {
-            background-color: #28a745; /* हरा सबमिट बटन */
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-top: 10px;
-            font-family: Arial, sans-serif; /* स्वच्छ दिखने के लिए ओवरराइड */
-        }
-
-        #future-form input[type="submit"]:hover {
-            background-color: #218838;
-        }
-
-        /* --- भविष्य की भविष्यवाणियाँ प्रदर्शन (पुराना "अपना भविष्य देखें" के लिए) --- */
-        #predictions-display {
-            display: none; /* शुरू में छिपा हुआ */
-            background-color: #2a2a4a;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            max-width: 500px;
-            width: 90%;
-            text-align: left;
-            margin-top: 20px;
-            font-family: Arial, sans-serif; /* स्वच्छ दिखने के लिए ओवरराइड */
-            overflow-y: auto; /* भविष्यवाणी सूची के लिए स्क्रॉलिंग सक्षम करें */
-            max-height: 300px; /* भविष्यवाणी सूची की अधिकतम ऊंचाई */
-        }
-
-        #predictions-display h2 {
-            color: #f0ad4e; /* हेडिंग के लिए नारंगी */
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        #predictions-list {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        #predictions-list li {
-            background-color: #3a3a5a;
-            margin-bottom: 10px;
-            padding: 12px;
-            border-radius: 5px;
-            font-size: 1.1em;
-            color: #c0c0c0;
-        }
-
-        /* --- "अपना चेहरा अनुमान लगाएं" फॉर्म स्टाइल --- */
-        #guess-face-form {
-            display: none; /* शुरू में छिपा हुआ */
+        #age-prediction-section {
+            display: none;
             flex-direction: column;
             gap: 15px;
             background-color: #2a2a4a;
@@ -230,21 +105,24 @@
             max-width: 500px;
             width: 90%;
             font-family: Arial, sans-serif;
+            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 90vh;
         }
 
-        #guess-face-form h2 {
-            color: #6a0dad; /* बैंगनी रंग */
-            text-align: center;
-            margin-bottom: 20px;
+        #age-prediction-section h2 {
+             color: #f0ad4e;
+             text-align: center;
+             margin-bottom: 20px;
         }
 
-        #guess-face-form label {
+        #age-prediction-section label {
             font-size: 1.1em;
             color: #bbbbbb;
         }
 
-        #guess-face-form input[type="text"],
-        #guess-face-form input[type="date"] {
+        #age-prediction-section input[type="text"],
+        #age-prediction-section input[type="date"] {
             padding: 10px;
             border: 1px solid #555;
             border-radius: 5px;
@@ -254,8 +132,8 @@
             width: calc(100% - 22px);
         }
 
-        #guess-face-form input[type="submit"] {
-            background-color: #dc3545; /* लाल सबमिट बटन */
+        #age-prediction-section input[type="submit"] {
+            background-color: #28a745;
             color: white;
             padding: 12px 25px;
             border: none;
@@ -267,206 +145,120 @@
             font-family: Arial, sans-serif;
         }
 
-        #guess-face-form input[type="submit"]:hover {
-            background-color: #c82333;
-        }
-
-        /* --- चेहरा भविष्यवाणी प्रदर्शन --- */
-        #face-prediction-display {
-            display: none; /* शुरू में छिपा हुआ */
-            background-color: #2a2a4a;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-            margin-top: 20px;
-            font-family: Arial, sans-serif;
-        }
-
-        #face-prediction-display h2 {
-            color: #6a0dad;
-            margin-bottom: 20px;
-        }
-
-        #predicted-face {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-top: 15px;
-            box-shadow: 0 0 15px rgba(106, 13, 173, 0.7); /* बैंगनी चमक */
-        }
-
-        /* --- पॉपअप स्टाइल --- */
-        .popup {
-            display: none;
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #2a2a4a;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            text-align: center;
-            flex-direction: column;
-            gap: 20px;
-            color: #e0e0e0;
-            font-family: Arial, sans-serif;
-            max-width: 400px;
-            width: 90%;
-        }
-
-        .popup h2 {
-            color: #ffcc00;
-            margin-bottom: 15px;
-        }
-
-        .popup-button {
-            background-color: #28a745;
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .popup-button:hover {
+        #age-prediction-section input[type="submit"]:hover {
             background-color: #218838;
         }
-        /* AdSense कंटेनर के लिए स्टाइलिंग */
-        .ad-container {
-            margin-top: 30px; /* ऊपर से थोड़ी जगह */
-            margin-bottom: 30px; /* नीचे से थोड़ी जगह */
-            text-align: center; /* विज्ञापन को सेंटर करने के लिए */
-            display: block; /* यह सुनिश्चित करने के लिए कि यह सही से जगह ले */
+
+        #age-result {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #00bcd4;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            #intro-screen {
+                font-size: 2.5em;
+            }
+            #new-home-screen, #age-prediction-section {
+                padding: 20px;
+            }
+            .button {
+                padding: 12px 20px;
+                font-size: 1em;
+            }
         }
     </style>
 </head>
 <body>
-
     <div id="intro-screen">
         ADBOSS 2.0<br>जारी
     </div>
 
-    <div id="home-screen">
+    <div id="new-home-screen">
         <h1>ADBOSS 2.0 में आपका स्वागत है</h1>
-        <button class="button" id="show-future-button">अपना भविष्य देखें</button>
-        <button class="button" id="guess-face-button">अपना चेहरा अनुमान लगाएं</button>
-        <button class="button" id="luck-game-button">आपका भाग्य खेल भविष्यवाणी</button>
-        <button class="button" id="prediction-game-button">ADBOSS PREDICTION GAME FREE EARNING 🤑</button>
-        <div id="server-busy-message">सर्वर व्यस्त है कृपया बाद में प्रयास करें :- ADBOSS</div>
-
-        <div class="ad-container">
-            <ins class="adsbygoogle"
-                 style="display:inline-block;width:360px;height:800px"
-                 data-ad-client="ca-pub-1493967192695375"
-                 data-ad-slot="4414929678"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
+        <button class="button" id="show-age-button">अपनी आयु जानें</button>
+        <a href="https://arvinddara.github.io/ADVANCE/" target="_blank" class="button">रंग भविष्यवाणी देखें</a>
+        <a href="https://arvinddara.github.io/Ai/" target="_blank" class="button">सभी नए विकल्प देखें</a>
+        <a href="https://roomsmergeshipwreck.com/gapisxdta?key=f7c2d9614f0a0b1f06ea4ad2ea184b06" target="_blank" class="button">पैसे जीतें</a>
     </div>
 
-    <form id="future-form">
-        <h2>अपनी जानकारी दर्ज करें</h2>
-        <label for="name">नाम:</label>
-        <input type="text" id="name" required>
+    <div id="age-prediction-section">
+        <h2>अपनी आयु जानें</h2>
+        <label for="user-name">नाम:</label>
+        <input type="text" id="user-name" required>
 
-        <label for="dob">जन्म तिथि:</label>
-        <input type="date" id="dob" required>
+        <label for="user-dob">जन्म तिथि:</label>
+        <input type="date" id="user-dob" required>
 
-        <label for="city">शहर:</label>
-        <input type="text" id="city" required>
-
-        <input type="submit" value="जमा करें">
-
-        <div class="ad-container">
-            <ins class="adsbygoogle"
-                 style="display:inline-block;width:360px;height:800px"
-                 data-ad-client="ca-pub-1493967192695375"
-                 data-ad-slot="4414929678"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-    </form>
-
-    <div id="predictions-display">
-        <h2>आपकी भविष्यवाणियाँ:</h2>
-        <ul id="predictions-list"></ul>
-    </div>
-
-    <form id="guess-face-form">
-        <h2>अपना चेहरा अनुमान लगाएं</h2>
-        <label for="face-name">नाम:</label>
-        <input type="text" id="face-name" required>
-
-        <label for="face-dob">जन्म तिथि:</label>
-        <input type="date" id="face-dob" required>
-
-        <label for="face-city">शहर:</label>
-        <input type="text" id="face-city" required>
-
-        <input type="submit" value="अनुमान लगाएं">
-
-        <div class="ad-container">
-            <ins class="adsbygoogle"
-                 style="display:inline-block;width:360px;height:800px"
-                 data-ad-client="ca-pub-1493967192695375"
-                 data-ad-slot="4414929678"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-    </form>
-
-    <div id="face-prediction-display">
-        <h2>आपका अनुमानित चेहरा:</h2>
-        <img id="predicted-face" src="" alt="अनुमानित चेहरा">
-    </div>
-
-    <div id="earning-game-popup" class="popup">
-        <h2>EARNING GAME COMING SOON</h2>
-        <button class="popup-button" id="play-trail-button">PLAY TRAIL</button>
+        <input type="submit" value="आयु की गणना करें" id="calculate-age-button">
+        <div id="age-result"></div>
+        <button class="button" id="back-to-new-home-from-age">होम पर वापस</button>
     </div>
 
     <script>
         const introScreen = document.getElementById('intro-screen');
-        const homeScreen = document.getElementById('home-screen');
-        const serverBusyMessage = document.getElementById('server-busy-message');
-        const showFutureButton = document.getElementById('show-future-button');
-        const futureForm = document.getElementById('future-form');
-        const predictionsDisplay = document.getElementById('predictions-display');
-        const predictionsList = document.getElementById('predictions-list');
-        const predictionGameButton = document.getElementById('prediction-game-button');
-        const earningGamePopup = document.getElementById('earning-game-popup');
-        const playTrailButton = document.getElementById('play-trail-button');
+        const newHomeScreen = document.getElementById('new-home-screen');
+        const showAgeButton = document.getElementById('show-age-button');
+        const agePredictionSection = document.getElementById('age-prediction-section');
+        const calculateAgeButton = document.getElementById('calculate-age-button');
+        const userNameInput = document.getElementById('user-name');
+        const userDobInput = document.getElementById('user-dob');
+        const ageResultDiv = document.getElementById('age-result');
+        const backToNewHomeFromAge = document.getElementById('back-to-new-home-from-age');
 
-        // नए कंपोनेंट्स के लिए वेरिएबल्स
-        const guessFaceButton = document.getElementById('guess-face-button');
-        const luckGameButton = document.getElementById('luck-game-button');
-        const guessFaceForm = document.getElementById('guess-face-form');
-        const facePredictionDisplay = document.getElementById('face-prediction-display');
-        const predictedFaceImage = document.getElementById('predicted-face');
+        function hideAllScreens() {
+            newHomeScreen.style.display = 'none';
+            agePredictionSection.style.display = 'none';
+        }
 
-        // रैंडम चेहरे की इमेज URL की सूची (आप इन्हें अपनी इमेज URL से बदल सकते हैं)
-        const faceImages = [
-            'https://i.ibb.co/L519V1N/girl-face.jpg', // उदाहरण URL 1
-            'https://i.ibb.co/VMyhG82/boy-face.jpg',   // उदाहरण URL 2
-            'https://i.ibb.co/x1b3XmS/person-1.jpg',   // उदाहरण URL 3
-            'https://i.ibb.co/Q8b7P5q/person-2.jpg',   // उदाहरण URL 4
-            'https://i.ibb.co/L5x9h6b/person-3.jpg',   // उदाहरण URL 5
-            'https://i.ibb.co/YyJ6L6K/person-4.jpg'    // उदाहरण URL 6
-        ];
+        function showNewHomeScreen() {
+            hideAllScreens();
+            newHomeScreen.style.display = 'flex';
+        }
 
-        // --- इंट्रो एनिमेशन टाइमिंग (बदला हुआ) ---
+        // Intro animation timing
         setTimeout(() => {
-            introScreen.style.display = 'none'; // इंट्रो स्क्रीन छुपाएँ
-            homeScreen.style.display = 'flex';   // होम स्क्रीन दिखाएँ
-        }, 320
-        
+            introScreen.style.display = 'none';
+            showNewHomeScreen();
+        }, 3000); // Matches the glitchReveal animation duration
+
+        showAgeButton.addEventListener('click', () => {
+            hideAllScreens();
+            agePredictionSection.style.display = 'flex';
+            userNameInput.value = '';
+            userDobInput.value = '';
+            ageResultDiv.textContent = '';
+        });
+
+        calculateAgeButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            const name = userNameInput.value.trim();
+            const dobString = userDobInput.value;
+
+            if (!name || !dobString) {
+                ageResultDiv.textContent = 'कृपया अपना नाम और जन्म तिथि दर्ज करें।';
+                return;
+            }
+
+            const dob = new Date(dobString);
+            const today = new Date();
+
+            let age = today.getFullYear() - dob.getFullYear();
+            const monthDiff = today.getMonth() - dob.getMonth();
+            const dayDiff = today.getDate() - dob.getDate();
+
+            if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+                age--;
+            }
+
+            ageResultDiv.textContent = `नमस्ते ${name}, आपकी आयु लगभग ${age} वर्ष है।`;
+        });
+
+        backToNewHomeFromAge.addEventListener('click', () => {
+            showNewHomeScreen();
+        });
+    </script>
+</body>
+</html>
