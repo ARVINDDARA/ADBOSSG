@@ -15,10 +15,12 @@
             --accent-color: #00bcd4;
             --shadow-light: rgba(0, 0, 0, 0.3);
             --shadow-medium: rgba(0, 0, 0, 0.5);
+            --youtube-red: #FF0000; /* YouTube's signature red */
+            --youtube-red-hover: #CC0000;
         }
 
         body {
-            font-family: 'Poppins', sans-serif; /* Modern sans-serif for main content */
+            font-family: 'Poppins', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -29,11 +31,11 @@
             overflow-x: hidden;
             box-sizing: border-box;
             padding: 20px;
-            perspective: 1000px; /* For 3D effects if needed later */
+            perspective: 1000px;
         }
 
         #intro-screen {
-            font-family: 'Press Start 2P', cursive; /* Keep retro font for intro */
+            font-family: 'Press Start 2P', cursive;
             text-align: center;
             font-size: 3.5em;
             font-weight: bold;
@@ -68,15 +70,15 @@
             gap: 20px;
             background-color: var(--card-background);
             padding: 40px;
-            border-radius: 15px; /* Softer, modern corners */
-            box-shadow: 0 10px 30px var(--shadow-medium), 0 0 15px var(--shadow-light) inset; /* Deeper shadow */
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--shadow-medium), 0 0 15px var(--shadow-light) inset;
             max-width: 500px;
             width: 90%;
             text-align: center;
             box-sizing: border-box;
             overflow-y: auto;
             max-height: 90vh;
-            animation: fadeIn 0.8s ease-out forwards; /* Smooth fade-in */
+            animation: fadeIn 0.8s ease-out forwards;
         }
 
         @keyframes fadeIn {
@@ -85,48 +87,47 @@
         }
 
         #new-home-screen h1 {
-            color: var(--primary-color); /* Use primary color for heading */
-            margin-bottom: 25px; /* More space */
+            color: var(--primary-color);
+            margin-bottom: 25px;
             font-size: 2.2em;
-            font-weight: 700; /* Bolder font */
+            font-weight: 700;
             letter-spacing: 1px;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
 
         .button {
-            background: linear-gradient(45deg, var(--primary-color), #DA70D6); /* Gradient for buttons */
+            background: linear-gradient(45deg, var(--primary-color), #DA70D6);
             color: white;
             padding: 15px 30px;
             border: none;
-            border-radius: 8px; /* Slightly rounded for modern look */
+            border-radius: 8px;
             font-size: 1.15em;
             cursor: pointer;
-            transition: all 0.3s ease; /* Smooth transitions for all properties */
-            width: 90%; /* Wider buttons */
+            transition: all 0.3s ease;
+            width: 90%;
             max-width: 320px;
-            font-weight: 600; /* Semi-bold text */
+            font-weight: 600;
             text-decoration: none;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Button shadow */
-            position: relative; /* For subtle pseudo-element effects */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            position: relative;
             overflow: hidden;
             letter-spacing: 0.5px;
         }
 
         .button:hover {
-            background: linear-gradient(45deg, var(--primary-hover), #BA55D3); /* Darker gradient on hover */
-            transform: translateY(-3px) scale(1.02); /* Lift and slightly enlarge */
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* More pronounced shadow */
+            background: linear-gradient(45deg, var(--primary-hover), #BA55D3);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
         }
 
         .button:active {
-            transform: translateY(0px) scale(0.98); /* Press effect */
+            transform: translateY(0px) scale(0.98);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
-        /* Subtle ripple effect on click (CSS only) */
         .button::after {
             content: '';
             position: absolute;
@@ -144,6 +145,30 @@
         .button:active::after {
             transform: scale(200);
             opacity: 1;
+        }
+
+        /* Specific styling for the YouTube button */
+        .youtube-button {
+            background: linear-gradient(45deg, var(--youtube-red), #FF4D4D); /* YouTube red gradient */
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+            font-size: 1.25em; /* Slightly larger for emphasis */
+            padding: 18px 30px; /* More padding */
+        }
+
+        .youtube-button:hover {
+            background: linear-gradient(45deg, var(--youtube-red-hover), #E60000);
+            transform: translateY(-5px) scale(1.03); /* More pronounced lift */
+            box-shadow: 0 10px 25px rgba(255, 0, 0, 0.6);
+        }
+
+        .youtube-button::before { /* Adding a pseudo-element for a subtle YouTube icon effect */
+            content: '▶'; /* Play triangle unicode character */
+            display: inline-block;
+            margin-right: 10px;
+            font-size: 1.2em; /* Size of the play button */
+            line-height: 1; /* Align with text */
+            color: white; /* Ensure it's white */
+            text-shadow: 0 0 5px rgba(0,0,0,0.5); /* Subtle shadow for depth */
         }
 
 
@@ -189,8 +214,8 @@
             background-color: #2a2a2a;
             color: var(--text-color);
             font-size: 1em;
-            width: calc(100% - 24px); /* Account for padding */
-            box-sizing: border-box; /* Include padding in width */
+            width: calc(100% - 24px);
+            box-sizing: border-box;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
@@ -236,10 +261,9 @@
             text-shadow: 0 0 8px rgba(0, 189, 212, 0.5);
         }
 
-        /* Back button styling - reusing .button class but overriding some styles for specific look */
         #back-to-new-home-from-age {
-            margin-top: 25px; /* More space above back button */
-            background: #555; /* A more subdued color for back */
+            margin-top: 25px;
+            background: #555;
             font-size: 1em;
             padding: 12px 25px;
             max-width: 200px;
@@ -259,7 +283,7 @@
                 letter-spacing: 2px;
             }
             #new-home-screen, #age-prediction-section {
-                padding: 30px 20px; /* Adjust padding for smaller screens */
+                padding: 30px 20px;
                 gap: 15px;
             }
             #new-home-screen h1 {
@@ -269,7 +293,15 @@
             .button {
                 padding: 14px 20px;
                 font-size: 1.0em;
-                max-width: none; /* Allow buttons to take full width if needed */
+                max-width: none;
+            }
+            .youtube-button {
+                font-size: 1.1em;
+                padding: 15px 25px;
+            }
+            .youtube-button::before {
+                font-size: 1em;
+                margin-right: 8px;
             }
             #age-prediction-section h2 {
                 font-size: 1.5em;
@@ -298,7 +330,7 @@
         <button class="button" id="show-age-button">अपनी आयु जानें</button>
         <a href="https://arvinddara.github.io/ADVANCE/" target="_blank" class="button">रंग भविष्यवाणी देखें</a>
         <a href="https://arvinddara.github.io/Ai/" target="_blank" class="button">सभी नए विकल्प देखें</a>
-        <a href="https://roomsmergeshipwreck.com/gapisxdta?key=f7c2d9614f0a0b1f06ea4ad2ea184b06" target="_blank" class="button">पैसे जीतें</a>
+        <a href="https://youtube.com/@ravi..bhai_0029?si=ftyvs-VK0TsTcgV6" target="_blank" class="button youtube-button">हमारे चैनल पर जाएँ</a>
     </div>
 
     <div id="age-prediction-section">
