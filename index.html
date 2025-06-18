@@ -4,28 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>ADBOSS 2.0</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* आपकी मौजूदा CSS */
+        :root {
+            --dark-background: #121212;
+            --card-background: #1e1e1e;
+            --text-color: #e0e0e0;
+            --primary-color: #8A2BE2; /* A modern purple */
+            --primary-hover: #9932CC; /* Darker purple on hover */
+            --accent-color: #00bcd4;
+            --shadow-light: rgba(0, 0, 0, 0.3);
+            --shadow-medium: rgba(0, 0, 0, 0.5);
+        }
+
         body {
-            font-family: 'Press Start 2P', cursive;
+            font-family: 'Poppins', sans-serif; /* Modern sans-serif for main content */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            background-color: #1a1a2e;
-            color: #e0e0e0;
+            background-color: var(--dark-background);
+            color: var(--text-color);
             overflow-x: hidden;
             box-sizing: border-box;
             padding: 20px;
+            perspective: 1000px; /* For 3D effects if needed later */
         }
 
         #intro-screen {
+            font-family: 'Press Start 2P', cursive; /* Keep retro font for intro */
             text-align: center;
             font-size: 3.5em;
             font-weight: bold;
-            color: #00bcd4;
+            color: var(--accent-color);
             animation: glitchReveal 3s forwards;
             text-shadow: 0 0 10px rgba(0, 189, 212, 0.7), 0 0 20px rgba(0, 189, 212, 0.5);
             letter-spacing: 5px;
@@ -35,6 +47,7 @@
             transform: translate(-50%, -50%);
             width: 90%;
             max-width: 600px;
+            z-index: 10;
         }
 
         @keyframes glitchReveal {
@@ -53,120 +66,224 @@
             flex-direction: column;
             align-items: center;
             gap: 20px;
-            background-color: #2a2a4a;
+            background-color: var(--card-background);
             padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border-radius: 15px; /* Softer, modern corners */
+            box-shadow: 0 10px 30px var(--shadow-medium), 0 0 15px var(--shadow-light) inset; /* Deeper shadow */
             max-width: 500px;
             width: 90%;
             text-align: center;
             box-sizing: border-box;
             overflow-y: auto;
             max-height: 90vh;
+            animation: fadeIn 0.8s ease-out forwards; /* Smooth fade-in */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         #new-home-screen h1 {
-            color: #4CAF50;
-            margin-bottom: 20px;
-            font-size: 1.8em;
-            font-family: Arial, sans-serif;
+            color: var(--primary-color); /* Use primary color for heading */
+            margin-bottom: 25px; /* More space */
+            font-size: 2.2em;
+            font-weight: 700; /* Bolder font */
+            letter-spacing: 1px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
 
         .button {
-            background-color: #007bff;
+            background: linear-gradient(45deg, var(--primary-color), #DA70D6); /* Gradient for buttons */
             color: white;
             padding: 15px 30px;
             border: none;
-            border-radius: 5px;
-            font-size: 1.2em;
+            border-radius: 8px; /* Slightly rounded for modern look */
+            font-size: 1.15em;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            width: 80%;
-            max-width: 300px;
-            font-family: Arial, sans-serif;
+            transition: all 0.3s ease; /* Smooth transitions for all properties */
+            width: 90%; /* Wider buttons */
+            max-width: 320px;
+            font-weight: 600; /* Semi-bold text */
             text-decoration: none;
             display: flex;
             justify-content: center;
             align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Button shadow */
+            position: relative; /* For subtle pseudo-element effects */
+            overflow: hidden;
+            letter-spacing: 0.5px;
         }
 
         .button:hover {
-            background-color: #0056b3;
+            background: linear-gradient(45deg, var(--primary-hover), #BA55D3); /* Darker gradient on hover */
+            transform: translateY(-3px) scale(1.02); /* Lift and slightly enlarge */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* More pronounced shadow */
         }
+
+        .button:active {
+            transform: translateY(0px) scale(0.98); /* Press effect */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Subtle ripple effect on click (CSS only) */
+        .button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(1);
+            transition: all 0.5s ease-out;
+        }
+
+        .button:active::after {
+            transform: scale(200);
+            opacity: 1;
+        }
+
 
         #age-prediction-section {
             display: none;
             flex-direction: column;
             gap: 15px;
-            background-color: #2a2a4a;
+            background-color: var(--card-background);
             padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--shadow-medium), 0 0 15px var(--shadow-light) inset;
             max-width: 500px;
             width: 90%;
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             box-sizing: border-box;
             overflow-y: auto;
             max-height: 90vh;
+            animation: fadeIn 0.8s ease-out forwards;
         }
 
         #age-prediction-section h2 {
              color: #f0ad4e;
              text-align: center;
              margin-bottom: 20px;
+             font-size: 1.8em;
+             font-weight: 600;
         }
 
         #age-prediction-section label {
-            font-size: 1.1em;
+            font-size: 1em;
             color: #bbbbbb;
+            text-align: left;
+            width: 100%;
+            margin-top: 5px;
+            margin-bottom: 5px;
         }
 
         #age-prediction-section input[type="text"],
         #age-prediction-section input[type="date"] {
-            padding: 10px;
-            border: 1px solid #555;
-            border-radius: 5px;
-            background-color: #3a3a5a;
-            color: #e0e0e0;
+            padding: 12px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background-color: #2a2a2a;
+            color: var(--text-color);
             font-size: 1em;
-            width: calc(100% - 22px);
+            width: calc(100% - 24px); /* Account for padding */
+            box-sizing: border-box; /* Include padding in width */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #age-prediction-section input[type="text"]:focus,
+        #age-prediction-section input[type="date"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.5);
         }
 
         #age-prediction-section input[type="submit"] {
             background-color: #28a745;
             color: white;
-            padding: 12px 25px;
+            padding: 14px 28px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 1.1em;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-top: 10px;
-            font-family: Arial, sans-serif;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            margin-top: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
 
         #age-prediction-section input[type="submit"]:hover {
             background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+        #age-prediction-section input[type="submit"]:active {
+            transform: translateY(0px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
         #age-result {
-            margin-top: 20px;
-            font-size: 1.5em;
-            color: #00bcd4;
+            margin-top: 25px;
+            font-size: 1.6em;
+            color: var(--accent-color);
             text-align: center;
-            font-weight: bold;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 8px rgba(0, 189, 212, 0.5);
         }
+
+        /* Back button styling - reusing .button class but overriding some styles for specific look */
+        #back-to-new-home-from-age {
+            margin-top: 25px; /* More space above back button */
+            background: #555; /* A more subdued color for back */
+            font-size: 1em;
+            padding: 12px 25px;
+            max-width: 200px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        #back-to-new-home-from-age:hover {
+            background: #777;
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.4);
+        }
+
 
         @media (max-width: 600px) {
             #intro-screen {
                 font-size: 2.5em;
+                letter-spacing: 2px;
             }
             #new-home-screen, #age-prediction-section {
-                padding: 20px;
+                padding: 30px 20px; /* Adjust padding for smaller screens */
+                gap: 15px;
+            }
+            #new-home-screen h1 {
+                font-size: 1.8em;
+                margin-bottom: 20px;
             }
             .button {
+                padding: 14px 20px;
+                font-size: 1.0em;
+                max-width: none; /* Allow buttons to take full width if needed */
+            }
+            #age-prediction-section h2 {
+                font-size: 1.5em;
+            }
+            #age-prediction-section input[type="text"],
+            #age-prediction-section input[type="date"] {
+                font-size: 0.95em;
+            }
+            #age-prediction-section input[type="submit"] {
                 padding: 12px 20px;
                 font-size: 1em;
+            }
+            #age-result {
+                font-size: 1.3em;
             }
         }
     </style>
@@ -187,7 +304,7 @@
     <div id="age-prediction-section">
         <h2>अपनी आयु जानें</h2>
         <label for="user-name">नाम:</label>
-        <input type="text" id="user-name" required>
+        <input type="text" id="user-name" required placeholder="अपना नाम दर्ज करें">
 
         <label for="user-dob">जन्म तिथि:</label>
         <input type="date" id="user-dob" required>
