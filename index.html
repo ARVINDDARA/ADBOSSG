@@ -32,18 +32,55 @@
             box-sizing: border-box;
             padding: 20px;
             perspective: 1000px;
+            position: relative; /* For background pseudo-element */
+            overflow: hidden; /* Hide overflow from background effect */
         }
 
-        #intro-screen {
-            font-family: 'Press Start 2P', cursive;
-            text-align: center;
-            font-size: 3.5em;
-            font-weight: bold;
-            color: var(--accent-color);
-            animation: glitchReveal 3s forwards;
-            text-shadow: 0 0 10px rgba(0, 189, 212, 0.7), 0 0 20px rgba(0, 189, 212, 0.5);
-            letter-spacing: 5px;
+        /* Hacker Code Background Effect */
+        body::before {
+            content: '';
             position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                rgba(0, 255, 0, 0.05),
+                rgba(0, 255, 0, 0.05) 1px,
+                transparent 1px,
+                transparent 10px
+            ),
+            repeating-linear-gradient(
+                to right,
+                rgba(0, 255, 0, 0.02),
+                rgba(0, 255, 0, 0.02) 1px,
+                transparent 1px,
+                transparent 10px
+            ),
+            url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><text x="0" y="15" font-family="monospace" font-size="16" fill="%230F0">01</text></svg>'); /* Small repeating SVG for binary digits */
+            background-size: 20px 20px, 20px 20px, 20px 20px;
+            background-repeat: repeat;
+            animation: backgroundScroll 60s linear infinite; /* Slower scroll */
+            z-index: -1; /* Send it to the back */
+            opacity: 0.1; /* Subtle effect */
+        }
+
+        @keyframes backgroundScroll {
+            from { background-position: 0 0; }
+            to { background-position: 0 100vh; }
+        }
+
+        /* ADBOSS Hacked Message Styles */
+        #intro-screen {
+            font-family: 'Courier New', Courier, monospace; /* Monospace font for a "terminal" feel */
+            color: #0f0; /* Green text for a "hacker" look */
+            text-shadow: 0 0 10px #0f0; /* Green glow */
+            font-size: 3em;
+            text-align: center;
+            opacity: 0; /* Initially hidden */
+            animation: fadeInOut 4s forwards; /* Animation for fading in and out */
+            position: absolute; /* To center it */
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -52,17 +89,41 @@
             z-index: 10;
         }
 
-        @keyframes glitchReveal {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8) translateY(-20px); filter: blur(10px); text-shadow: none; letter-spacing: -20px; }
-            10% { opacity: 0.2; transform: translate(-50%, -50%) scale(0.9) translateY(0px); filter: blur(5px); text-shadow: none; letter-spacing: -10px; }
-            20% { opacity: 0.5; transform: translate(-50%, -50%) scale(1) translateY(0px); filter: blur(0px); text-shadow: 0 0 5px rgba(0, 189, 212, 0.4); letter-spacing: 0px; }
-            22% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.01); }
-            24% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.99); }
-            26% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0; transform: translate(-50%, -50%) scale(1.2); display: none; }
+        .glitch {
+            animation: glitchEffect 0.5s infinite alternate; /* Glitch effect */
         }
 
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            25% { opacity: 1; }
+            75% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        @keyframes glitchEffect {
+            0% {
+                transform: translate(0);
+                text-shadow: 2px 2px #f0f, -2px -2px #0ff;
+            }
+            25% {
+                transform: translate(-5px, 5px);
+                text-shadow: -2px -2px #f0f, 2px 2px #0ff;
+            }
+            50% {
+                transform: translate(5px, -5px);
+                text-shadow: 2px -2px #f0f, -2px 2px #0ff;
+            }
+            75% {
+                transform: translate(-5px, -5px);
+                text-shadow: -2px 2px #f0f, 2px -2px #0ff;
+            }
+            100% {
+                transform: translate(0);
+                text-shadow: 2px 2px #f0f, -2px -2px #0ff;
+            }
+        }
+
+        /* Existing Styles for New Home Screen and Age Prediction */
         #new-home-screen {
             display: none;
             flex-direction: column;
@@ -79,6 +140,8 @@
             overflow-y: auto;
             max-height: 90vh;
             animation: fadeIn 0.8s ease-out forwards;
+            position: relative; /* To be above the background effect */
+            z-index: 1;
         }
 
         @keyframes fadeIn {
@@ -187,6 +250,8 @@
             overflow-y: auto;
             max-height: 90vh;
             animation: fadeIn 0.8s ease-out forwards;
+            position: relative; /* To be above the background effect */
+            z-index: 1;
         }
 
         #age-prediction-section h2 {
@@ -322,7 +387,7 @@
 </head>
 <body>
     <div id="intro-screen">
-        ADBOSS 2.0<br>जारी
+        <span class="glitch">YOU ARE HACKED BY ADBOSS🗿</span>
     </div>
 
     <div id="new-home-screen">
@@ -367,11 +432,11 @@
             newHomeScreen.style.display = 'flex';
         }
 
-        // Intro animation timing
+        // Intro animation timing (now matches the new fadeInOut animation duration)
         setTimeout(() => {
             introScreen.style.display = 'none';
             showNewHomeScreen();
-        }, 3000); // Matches the glitchReveal animation duration
+        }, 4000); // Changed to 4 seconds to match the fadeInOut animation
 
         showAgeButton.addEventListener('click', () => {
             hideAllScreens();
