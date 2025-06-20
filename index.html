@@ -392,7 +392,8 @@
 
     <div id="new-home-screen">
         <h1>ADBOSS 2.0 में आपका स्वागत है</h1>
-        <button class="button" id="show-age-button">अपनी आयु जानें</button>
+        <a href="https://magicstudio.com/ai-art-generator/" target="_blank" class="button">TEXT TO IMAGE (जैसा इमेज चाहिए लिखो)</a>
+        <a href="https://www.twinlets.com/" target="_blank" class="button">अपना हमशक्ल ढूंढें 😂</a>
         <a href="https://arvinddara.github.io/ADVANCE/" target="_blank" class="button">रंग भविष्यवाणी देखें</a>
         <a href="https://arvinddara.github.io/Ai/" target="_blank" class="button">सभी नए विकल्प देखें</a>
         <a href="https://youtube.com/@ravi..bhai_0029?si=ftyvs-VK0TsTcgV6" target="_blank" class="button youtube-button">हमारे चैनल पर जाएँ</a>
@@ -414,7 +415,7 @@
     <script>
         const introScreen = document.getElementById('intro-screen');
         const newHomeScreen = document.getElementById('new-home-screen');
-        const showAgeButton = document.getElementById('show-age-button');
+        const showAgeButton = document.getElementById('show-age-button'); // This button is now removed from the HTML, but kept in JS for completeness if needed elsewhere.
         const agePredictionSection = document.getElementById('age-prediction-section');
         const calculateAgeButton = document.getElementById('calculate-age-button');
         const userNameInput = document.getElementById('user-name');
@@ -438,13 +439,15 @@
             showNewHomeScreen();
         }, 4000); // Changed to 4 seconds to match the fadeInOut animation
 
-        showAgeButton.addEventListener('click', () => {
-            hideAllScreens();
-            agePredictionSection.style.display = 'flex';
-            userNameInput.value = '';
-            userDobInput.value = '';
-            ageResultDiv.textContent = '';
-        });
+        // The age prediction functionality is now only accessible if directly linked or through other means.
+        // The button that triggered it is removed from the main home screen.
+        // showAgeButton.addEventListener('click', () => {
+        //     hideAllScreens();
+        //     agePredictionSection.style.display = 'flex';
+        //     userNameInput.value = '';
+        //     userDobInput.value = '';
+        //     ageResultDiv.textContent = '';
+        // });
 
         calculateAgeButton.addEventListener('click', (event) => {
             event.preventDefault();
