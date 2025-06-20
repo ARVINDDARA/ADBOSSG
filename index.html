@@ -123,6 +123,43 @@
             }
         }
 
+        /* Start Button Container */
+        #start-button-container {
+            display: none; /* Hidden initially */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10; /* Above other elements */
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        #start-app-button {
+            background: linear-gradient(45deg, #4CAF50, #8BC34A); /* Green gradient */
+            color: white;
+            padding: 20px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 200, 0, 0.4);
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        #start-app-button:hover {
+            background: linear-gradient(45deg, #45A049, #7CB342);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0, 200, 0, 0.6);
+        }
+
+        #start-app-button:active {
+            transform: translateY(0px) scale(0.98);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+
         /* Existing Styles for New Home Screen and Age Prediction */
         #new-home-screen {
             display: none;
@@ -390,8 +427,12 @@
         <span class="glitch">YOU ARE HACKED BY ADBOSS🗿</span>
     </div>
 
+    <div id="start-button-container">
+        <button id="start-app-button">START</button>
+    </div>
+
     <div style="display:none;">
-        <iframe width="300" height="60" src="https://vocaroo.com/embed/1jFFARuie3uZ?autoplay=1" frameborder="0" allow="autoplay"></iframe>
+        <iframe id="audio-player" width="300" height="60" src="https://vocaroo.com/embed/1jFFARuie3uZ?autoplay=0" frameborder="0" allow="autoplay"></iframe>
     </div>
 
     <div id="new-home-screen">
@@ -418,8 +459,10 @@
 
     <script>
         const introScreen = document.getElementById('intro-screen');
+        const startButtonContainer = document.getElementById('start-button-container');
+        const startAppButton = document.getElementById('start-app-button');
+        const audioPlayer = document.getElementById('audio-player');
         const newHomeScreen = document.getElementById('new-home-screen');
-        const showAgeButton = document.getElementById('show-age-button'); // This button is now removed from the HTML, but kept in JS for completeness if needed elsewhere.
         const agePredictionSection = document.getElementById('age-prediction-section');
         const calculateAgeButton = document.getElementById('calculate-age-button');
         const userNameInput = document.getElementById('user-name');
@@ -430,6 +473,7 @@
         function hideAllScreens() {
             newHomeScreen.style.display = 'none';
             agePredictionSection.style.display = 'none';
+            startButtonContainer.style.display = 'none'; // Ensure start button is hidden when showing other screens
         }
 
         function showNewHomeScreen() {
@@ -437,21 +481,26 @@
             newHomeScreen.style.display = 'flex';
         }
 
-        // Intro animation timing (now matches the new fadeInOut animation duration)
+        // Intro animation timing
         setTimeout(() => {
-            introScreen.style.display = 'none';
-            showNewHomeScreen();
+            introScreen.style.animation = 'none'; // Stop glitch animation
+            introScreen.style.opacity = '0'; // Ensure it's fully faded out
+            introScreen.style.display = 'none'; // Hide the intro screen
+            startButtonContainer.style.display = 'flex'; // Show the start button
         }, 4000); // Changed to 4 seconds to match the fadeInOut animation
 
-        // The age prediction functionality is now only accessible if directly linked or through other means.
-        // The button that triggered it is removed from the main home screen.
-        // showAgeButton.addEventListener('click', () => {
-        //     hideAllScreens();
-        //     agePredictionSection.style.display = 'flex';
-        //     userNameInput.value = '';
-        //     userDobInput.value = '';
-        //     ageResultDiv.textContent = '';
-        // });
+        startAppButton.addEventListener('click', () => {
+            // Play audio by reloading the iframe src with autoplay
+            // This is a common trick to trigger play on user interaction
+            audioPlayer.src = "https://vocaroo.com/embed/1jFFARuie3uZ?autoplay=1";
+
+            // Hide the start button
+            startButtonContainer.style.display = 'none';
+
+            // Show the home screen
+            showNewHomeScreen();
+        });
+
 
         calculateAgeButton.addEventListener('click', (event) => {
             event.preventDefault();
